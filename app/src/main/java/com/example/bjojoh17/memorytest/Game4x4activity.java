@@ -22,7 +22,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     private MemoryButton selectedButton1;
     private MemoryButton selectedButton2;
 
-    private boolean isBusy = false;
+    public static boolean isBusy = false;
 
 
     @Override
@@ -61,8 +61,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                 tempButton.setOnClickListener(this);
 
                 //Vrid brickorna - start
-                int buttonRotation = new Random().nextInt(10) - 5;
-                tempButton.setRotation(buttonRotation);
+                //int buttonRotation = new Random().nextInt(10) - 5;
+                //tempButton.setRotation(buttonRotation);
                 //slut
 
                 buttons[r * numColumns + c] = tempButton;
@@ -145,7 +145,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     }
                     isBusy = false;
                 }
-            }, 500);
+            }, 1000);
             //slut
 
 
@@ -168,7 +168,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     selectedButton2 = null;
                     isBusy = false;
                 }
-            }, 500);
+            }, 1000);
         }
     }
 
