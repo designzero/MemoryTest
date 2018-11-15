@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Memory test</string>
+    <string name="title_memory">Memory</string>
+    <string name="menu_option_4x4_game">Spela</string>
+</resources>
