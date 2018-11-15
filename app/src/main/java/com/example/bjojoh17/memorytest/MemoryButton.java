@@ -4,12 +4,11 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatDrawableManager;
+import android.support.v4.content.ContextCompat;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.GridLayout;
 
-public class MemoryButton extends Button {
+public class MemoryButton extends android.support.v7.widget.AppCompatButton {
 
     protected int row;
     protected int column;
@@ -30,11 +29,8 @@ public class MemoryButton extends Button {
         column = c;
         frontDrawableId = frontImageDrawableId;
 
-        //front = AppCompatDrawableManager.get().getDrawable(context, frontImageDrawableId);
-        //back = AppCompatDrawableManager.get().getDrawable(context, R.drawable.button_question_mark);
-
-        front = AppCompatDrawableManager.get().getDrawable(context, frontImageDrawableId);
-        back = AppCompatDrawableManager.get().getDrawable(context, R.drawable.button_question_mark);
+        front = ContextCompat.getDrawable(context, frontImageDrawableId);
+        back = ContextCompat.getDrawable(context, R.drawable.button_question_mark);
 
         setBackground(back);
 
@@ -65,14 +61,14 @@ public class MemoryButton extends Button {
     }
 
     public void flip() {
-        final MemoryButton tempButton = (MemoryButton) this;
+        final MemoryButton tempButton = this;
 
         if(isMatched) {
             return;
         }
 
         if(isFlipped) {
-            Game4x4activity.isBusy = true;
+            Game4x4activity.setBusy(true);
             //Animera brickan halvvägs (så den blir osynlig)
             ObjectAnimator animation = ObjectAnimator.ofFloat(tempButton, "rotationY", 360f, 270f);
             animation.setDuration(200);
@@ -96,7 +92,7 @@ public class MemoryButton extends Button {
                     animation2.setDuration(200);
                     animation2.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation2.start();
-                    Game4x4activity.isBusy = false;
+                    Game4x4activity.setBusy(false);
                 }
 
                 @Override

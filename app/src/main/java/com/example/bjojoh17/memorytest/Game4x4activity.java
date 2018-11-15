@@ -22,7 +22,11 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     private MemoryButton selectedButton1;
     private MemoryButton selectedButton2;
 
-    public static boolean isBusy = false;
+    private static boolean isBusy = false;
+
+    public static void setBusy(boolean busy) {
+        isBusy = busy;
+    }
 
 
     @Override
@@ -148,8 +152,6 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             }, 1000);
             //slut
 
-
-            return;
         }
 
         else {
