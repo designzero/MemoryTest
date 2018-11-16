@@ -1,15 +1,15 @@
 package com.example.bjojoh17.memorytest;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
 import java.util.Random;
 
-public class Game4x4activity extends AppCompatActivity implements View.OnClickListener {
+public class Game4x3activity extends AppCompatActivity implements View.OnClickListener {
 
     private int numberMatched;
     private int numberOfElements;

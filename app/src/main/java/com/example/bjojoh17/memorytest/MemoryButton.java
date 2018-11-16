@@ -36,8 +36,8 @@ public class MemoryButton extends android.support.v7.widget.AppCompatButton {
 
         GridLayout.LayoutParams tempParams = new GridLayout.LayoutParams(GridLayout.spec(r), GridLayout.spec(c));
 
-        tempParams.width = (int) getResources().getDisplayMetrics().density * 150;
-        tempParams.height = (int) getResources().getDisplayMetrics().density * 150;
+        tempParams.width = (int) getResources().getDisplayMetrics().density * 200;
+        tempParams.height = (int) getResources().getDisplayMetrics().density * 200;
         tempParams.topMargin = (int) getResources().getDisplayMetrics().density * 20;
         tempParams.leftMargin = (int) getResources().getDisplayMetrics().density * 20;
         tempParams.bottomMargin = (int) getResources().getDisplayMetrics().density * 20;
