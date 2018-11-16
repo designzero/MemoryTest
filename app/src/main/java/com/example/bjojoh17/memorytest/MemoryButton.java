@@ -84,6 +84,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatButton {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    //Byta till framsidebilden
                     tempButton.setBackground(back);
                     isFlipped = false;
 

@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
@@ -29,12 +30,22 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game4x3activity);
 
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
+
+        Button backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         int numColumns = gridLayout.getColumnCount();
         int numRows = gridLayout.getRowCount();
@@ -53,6 +64,13 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         buttonGraphics[5] = R.drawable.button_6;
         //buttonGraphics[6] = R.drawable.button_7;
         //buttonGraphics[7] = R.drawable.button_8;
+
+        //buttonGraphics[0] = R.drawable.button_11;
+        //buttonGraphics[1] = R.drawable.button_12;
+        //buttonGraphics[2] = R.drawable.button_13;
+        //buttonGraphics[3] = R.drawable.button_14;
+        //buttonGraphics[4] = R.drawable.button_15;
+        //buttonGraphics[5] = R.drawable.button_16;
 
         buttonGraphicIndexes = new int[numberOfElements];
 
