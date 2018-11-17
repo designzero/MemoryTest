@@ -30,7 +30,6 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
