@@ -37,6 +37,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_game4x3activity);
 
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
+        gridLayout.setRowCount(3);
+        gridLayout.setColumnCount(4);
 
         Button backButton = findViewById(R.id.backButton);
 
@@ -56,21 +58,21 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
         buttonGraphics = new int[numberOfElements / 2];
 
-        buttonGraphics[0] = R.drawable.button_1;
+        /*buttonGraphics[0] = R.drawable.button_1;
         buttonGraphics[1] = R.drawable.button_2;
         buttonGraphics[2] = R.drawable.button_3;
         buttonGraphics[3] = R.drawable.button_4;
         buttonGraphics[4] = R.drawable.button_5;
-        buttonGraphics[5] = R.drawable.button_6;
+        buttonGraphics[5] = R.drawable.button_6;*/
         //buttonGraphics[6] = R.drawable.button_7;
         //buttonGraphics[7] = R.drawable.button_8;
 
-        //buttonGraphics[0] = R.drawable.button_11;
-        //buttonGraphics[1] = R.drawable.button_12;
-        //buttonGraphics[2] = R.drawable.button_13;
-        //buttonGraphics[3] = R.drawable.button_14;
-        //buttonGraphics[4] = R.drawable.button_15;
-        //buttonGraphics[5] = R.drawable.button_16;
+        buttonGraphics[0] = R.drawable.button_11;
+        buttonGraphics[1] = R.drawable.button_12;
+        buttonGraphics[2] = R.drawable.button_13;
+        buttonGraphics[3] = R.drawable.button_14;
+        buttonGraphics[4] = R.drawable.button_15;
+        buttonGraphics[5] = R.drawable.button_16;
 
         buttonGraphicIndexes = new int[numberOfElements];
 

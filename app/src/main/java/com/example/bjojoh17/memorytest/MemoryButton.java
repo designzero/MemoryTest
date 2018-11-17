@@ -6,9 +6,11 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 
-public class MemoryButton extends android.support.v7.widget.AppCompatButton {
+public class MemoryButton extends android.support.v7.widget.AppCompatImageButton {
 
     protected int row;
     protected int column;
@@ -36,15 +38,14 @@ public class MemoryButton extends android.support.v7.widget.AppCompatButton {
 
         GridLayout.LayoutParams tempParams = new GridLayout.LayoutParams(GridLayout.spec(r), GridLayout.spec(c));
 
-        tempParams.width = (int) getResources().getDisplayMetrics().density * 200;
-        tempParams.height = (int) getResources().getDisplayMetrics().density * 200;
-        tempParams.topMargin = (int) getResources().getDisplayMetrics().density * 20;
-        tempParams.leftMargin = (int) getResources().getDisplayMetrics().density * 20;
-        tempParams.bottomMargin = (int) getResources().getDisplayMetrics().density * 20;
-        tempParams.rightMargin = (int) getResources().getDisplayMetrics().density * 20;
+        tempParams.width = (int) getResources().getDisplayMetrics().density * 175;
+        tempParams.height = (int) getResources().getDisplayMetrics().density * 175;
+        tempParams.topMargin = (int) getResources().getDisplayMetrics().density * 30;
+        tempParams.leftMargin = (int) getResources().getDisplayMetrics().density * 30;
+        tempParams.bottomMargin = (int) getResources().getDisplayMetrics().density * 30;
+        tempParams.rightMargin = (int) getResources().getDisplayMetrics().density * 30;
 
         setLayoutParams(tempParams);
-
 
     }
 
