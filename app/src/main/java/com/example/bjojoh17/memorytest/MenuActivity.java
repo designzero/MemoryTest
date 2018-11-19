@@ -10,7 +10,9 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button button4x4;
+    private Button buttonSolo;
+    private Button buttonDuo;
+    private String duo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +20,23 @@ public class MenuActivity extends AppCompatActivity {
         hideSystemUI();
         setContentView(R.layout.activity_menu);
 
-        button4x4 = findViewById(R.id.button_4x4_game);
+        buttonSolo = findViewById(R.id.button_solo);
+        buttonDuo = findViewById(R.id.button_duo);
 
-        button4x4.setOnClickListener(new View.OnClickListener() {
+        buttonSolo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, Game4x4activity.class);
+                intent.putExtra("duo", false);
+                startActivity(intent);
+            }
+        });
+
+        buttonDuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, Game4x4activity.class);
+                intent.putExtra("duo", true);
                 startActivity(intent);
             }
         });

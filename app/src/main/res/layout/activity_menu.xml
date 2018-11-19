@@ -22,10 +22,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_4x4_game"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_solo"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/menu_option_4x4_game"
+        android:layout_marginBottom="20dp"
+        android:text="@string/menu_option_solo_game"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button_duo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/menu_option_duo_game"
         android:textSize="30sp" />
 
 </LinearLayout>

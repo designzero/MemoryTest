@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Memory test</string>
     <string name="title_memory">Memory</string>
-    <string name="menu_option_4x4_game">Spela</string>
+    <string name="menu_option_solo_game">Solo</string>
+    <string name="menu_option_duo_game">Duo</string>
+    <string name="back_button">Tillbaka</string>
 </resources>

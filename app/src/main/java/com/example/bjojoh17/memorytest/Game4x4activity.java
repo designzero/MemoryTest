@@ -1,11 +1,14 @@
 package com.example.bjojoh17.memorytest;
 
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,6 +28,14 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     private MemoryButton selectedButton1;
     private MemoryButton selectedButton2;
 
+    private TextView pl1ScoreText;
+    private TextView pl2ScoreText;
+    private int pl1Score = 0;
+    private int pl2Score = 0;
+    private int turn = 2;
+
+    private boolean duo;
+
     private static boolean isBusy = false;
 
     public static void setBusy(boolean busy) {
@@ -37,7 +48,22 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         hideSystemUI();
 
+        duo = (boolean) getIntent().getExtras().get("duo");
+
         setContentView(R.layout.activity_game4x3activity);
+
+        pl1ScoreText = findViewById(R.id.pl1_score);
+        pl2ScoreText = findViewById(R.id.pl2_score);
+
+        if (duo) {
+            Log.d("Duo","Duo mode engaged!");
+            switchSides();
+        }
+
+        else {
+            pl1ScoreText.setVisibility(View.INVISIBLE);
+            pl2ScoreText.setVisibility(View.INVISIBLE);
+        }
 
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
         gridLayout.setRowCount(3);
@@ -127,6 +153,28 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    protected void switchSides() {
+        if (turn == 2) {
+            pl1ScoreText.setTextColor(Color.BLACK);
+            pl2ScoreText.setTextColor(Color.GRAY);
+            turn = 1;
+        }
+        else {
+            pl1ScoreText.setTextColor(Color.GRAY);
+            pl2ScoreText.setTextColor(Color.BLACK);
+            turn = 2;
+        }
+    }
+    protected void addScore() {
+        if (turn == 1) {
+            pl1Score++;
+            pl1ScoreText.setText("P1: " + pl1Score);
+        } else {
+            pl2Score++;
+            pl2ScoreText.setText("P2: " + pl2Score);
+        }
+    }
+
     protected void shuffleButtonGraphics() {
 
         Random rand = new Random();
@@ -176,6 +224,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             selectedButton1.setEnabled(false);
             button.setEnabled(false);
 
+
             //Behåll brickorna efter matchning - start
 //            selectedButton1 = null;
 //            numberMatched++;
@@ -191,12 +240,33 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    selectedButton1.setVisibility(View.GONE);
+                    selectedButton1.setVisibility(View.INVISIBLE);
                     button.setVisibility(View.INVISIBLE);
                     selectedButton1 = null;
                     numberMatched++;
+                    if (duo) {
+                        addScore();
+                    }
                     if (numberMatched == numberOfElements / 2) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT); toast.show();
+                        if (duo) {
+                            if (pl1Score > pl2Score) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Spelare 1 vann!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                            else if (pl1Score < pl2Score) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Spelare 2 vann!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                            else {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Det blev lika!", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }
                     isBusy = false;
                 }
@@ -220,6 +290,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     selectedButton1 = null;
                     selectedButton2 = null;
                     isBusy = false;
+                    switchSides();
                 }
             }, 1000);
         }
