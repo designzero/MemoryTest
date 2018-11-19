@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Random;
 
 public class Game4x4activity extends AppCompatActivity implements View.OnClickListener {
@@ -72,6 +74,34 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         buttonGraphics[3] = R.drawable.button_14;
         buttonGraphics[4] = R.drawable.button_15;
         buttonGraphics[5] = R.drawable.button_16;
+
+       /* // array of supported extensions (use a List if you prefer)
+        final String[] EXTENSIONS = new String[]{
+                "gif", "png", "bmp" // and other formats you need
+        };
+        // filter to identify images based on their extensions
+        final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+            @Override
+            public boolean accept(final File dir, final String name) {
+                for (final String ext : EXTENSIONS) {
+                    if (name.endsWith("." + ext)) {
+                        return (true);
+                    }
+                }
+                return (false);
+            }
+        };
+
+        File dir = new File("/sdcard/DCIM");
+        File[] filelist = dir.listFiles(IMAGE_FILTER );
+        for (File f : filelist) {
+            // do your stuff here
+
+
+        }*/
+
+
 
         buttonGraphicIndexes = new int[numberOfElements];
 
