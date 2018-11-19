@@ -35,6 +35,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideSystemUI();
+
         setContentView(R.layout.activity_game4x3activity);
 
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
