@@ -168,10 +168,10 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     protected void addScore() {
         if (turn == 1) {
             pl1Score++;
-            pl1ScoreText.setText("P1: " + pl1Score);
+            pl1ScoreText.setText("Spelare 1:  " + pl1Score);
         } else {
             pl2Score++;
-            pl2ScoreText.setText("P2: " + pl2Score);
+            pl2ScoreText.setText("Spelare 2:  " + pl2Score);
         }
     }
 

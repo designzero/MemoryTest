@@ -23,7 +23,7 @@
 
     <Button
         android:id="@+id/button_solo"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/menu_option_solo_game"
@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/button_duo"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/menu_option_duo_game"
