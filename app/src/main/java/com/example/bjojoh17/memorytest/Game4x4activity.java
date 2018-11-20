@@ -268,7 +268,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     if (duo) {
                         addScore();
                     }
-                    showEndScore("Bra jobbat!!!");
+
+                    //showEndScore("Bra jobbat!");  //Test
 
                     if (numberMatched == numberOfElements / 2) {
                         if (duo) {
@@ -344,13 +345,4 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    // Shows the system bars by removing all the flags
-    // except for the ones that make the content appear under the system bars.
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
 }

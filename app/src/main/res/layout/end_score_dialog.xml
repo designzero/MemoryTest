@@ -9,8 +9,10 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="400dp"
+        android:minHeight="300dp"
         android:background="@android:color/background_light">
 
         <TextView
