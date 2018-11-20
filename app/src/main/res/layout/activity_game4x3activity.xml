@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clipChildren="false">
+    android:background="@android:color/holo_orange_light"
+    android:clipChildren="false"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:orientation="horizontal"
-        android:clipChildren="false">
+        android:clipChildren="false"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/backButton"
@@ -20,7 +21,8 @@
             android:layout_marginEnd="50dp"
             android:padding="15dp"
             android:text="@string/back_button"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/pl1_score"
@@ -45,9 +47,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:clipChildren="false"
         android:gravity="center"
-        android:clipChildren="false">
+        android:orientation="vertical">
 
         <GridLayout
 
@@ -55,11 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:clipChildren="false"
             android:columnCount="4"
             android:gravity="center"
             android:rowCount="3"
-            tools:context=".Game4x3activity"
-            android:clipChildren="false">
+            tools:context=".Game4x3activity">
 
 
         </GridLayout>
