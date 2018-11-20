@@ -4,4 +4,5 @@
     <string name="menu_option_solo_game">En spelare</string>
     <string name="menu_option_duo_game">Två spelare</string>
     <string name="back_button">Tillbaka</string>
+    <string name="end_screen_title">Bra jobbat!</string>
 </resources>

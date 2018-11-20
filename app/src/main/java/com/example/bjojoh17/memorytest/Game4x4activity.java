@@ -34,6 +34,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     private int pl2Score = 0;
     private int turn = 2;
 
+    private TextView textEnd;
+
     private boolean duo;
 
     private static boolean isBusy = false;
@@ -195,6 +197,25 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    protected void showEndScore(String endMessage) {
+
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+
+        android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        android.app.Fragment prev = getFragmentManager().findFragmentByTag("endScoreDialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        EndScoreDialog esd = new EndScoreDialog();
+        esd.setMessage(endMessage);
+        esd.show(getSupportFragmentManager(), "endScoreDialog");
+    }
+
     @Override
     public void onClick(View view) {
         if(isBusy)
@@ -247,25 +268,26 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     if (duo) {
                         addScore();
                     }
+                    showEndScore("Bra jobbat!!!");
+
                     if (numberMatched == numberOfElements / 2) {
                         if (duo) {
                             if (pl1Score > pl2Score) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Spelare 1 vann!", Toast.LENGTH_SHORT);
-                                toast.show();
+                                showEndScore("Spelare 1 vann!");
                             }
                             else if (pl1Score < pl2Score) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Spelare 2 vann!", Toast.LENGTH_SHORT);
-                                toast.show();
+                                showEndScore("Spelare 2 vann!");
                             }
                             else {
-                                Toast toast = Toast.makeText(getApplicationContext(), "Det blev lika!", Toast.LENGTH_SHORT);
-                                toast.show();
+                                showEndScore("Det blev lika!");
                             }
 
                         }
                         else {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT);
-                            toast.show();
+                            //Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT);
+                            //toast.show();
+                            showEndScore("Bra jobbat!");
+
                         }
                     }
                     isBusy = false;

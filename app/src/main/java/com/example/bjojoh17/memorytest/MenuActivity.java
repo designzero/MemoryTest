@@ -12,7 +12,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button buttonSolo;
     private Button buttonDuo;
-    private String duo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
