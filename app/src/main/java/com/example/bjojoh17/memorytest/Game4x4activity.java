@@ -1,12 +1,19 @@
 package com.example.bjojoh17.memorytest;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -172,6 +179,122 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             turn = 2;
         }
     }
+
+    protected void animateMatched(final MemoryButton button2) {
+        final DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+
+        final MemoryButton button1 = selectedButton1;
+
+        final int duration = 1000;
+        final int duration2 = 1000;
+
+        button1.bringToFront();
+
+        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button1.getX() - button1.getWidth());
+        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button1.getY() - button1.getHeight());
+        PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
+        PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
+        PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
+        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2, pvhA2);
+        animator2.setInterpolator(new DecelerateInterpolator());
+        animator2.setDuration(duration);
+        isBusy = true;
+        animator2.start();
+
+        animator2.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator2) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator2) {
+                button1.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator2) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator2) {
+
+            }
+        });
+
+        button2.bringToFront();
+
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button2.getX() - button2.getWidth());
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button2.getY() - button2.getHeight());
+        PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
+        PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
+        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setDuration(duration);
+        animator.start();
+
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isBusy = false;
+                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - (metrics.density * button2.getWidth()));
+                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (- metrics.heightPixels / 2 + (metrics.density * button2.getHeight() + metrics.density * 30)));
+                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f);
+                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.0f);
+                        PropertyValuesHolder pvhA3 = PropertyValuesHolder.ofFloat("alpha", 0.0f);
+                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhA3);
+                        animator3.setInterpolator(new AccelerateDecelerateInterpolator());
+                        animator3.setDuration(duration2);
+                        animator3.start();
+
+                        animator3.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animator3) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animator3) {
+                                button2.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animator3) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animator3) {
+
+                            }
+                        });
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+    }
+
+
     protected void addScore() {
         if (turn == 1) {
             pl1Score++;
@@ -266,13 +389,19 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    selectedButton1.setVisibility(View.INVISIBLE);
-                    button.setVisibility(View.INVISIBLE);
+
+                    if (duo) {
+                        selectedButton1.setVisibility(View.INVISIBLE);
+                        button.setVisibility(View.INVISIBLE);
+                        addScore();
+                        isBusy = false;
+                    }
+                    else {
+                        animateMatched(button);
+                    }
+
                     selectedButton1 = null;
                     numberMatched++;
-                    if (duo) {
-                        addScore();
-                    }
 
                     //showEndScore("Bra jobbat!");  //Test
 
@@ -290,13 +419,16 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
                         }
                         else {
-                            //Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT);
-                            //toast.show();
-                            showEndScore("Bra jobbat!");
+                            final Handler handler = new Handler();
 
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showEndScore("Bra jobbat!");
+                                }
+                            }, 3000);
                         }
                     }
-                    isBusy = false;
                 }
             }, 1000);
             //slut

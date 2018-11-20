@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipChildren="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:clipChildren="false">
 
         <Button
             android:id="@+id/backButton"
@@ -44,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:clipChildren="false">
 
         <GridLayout
 
@@ -55,7 +58,8 @@
             android:columnCount="4"
             android:gravity="center"
             android:rowCount="3"
-            tools:context=".Game4x3activity">
+            tools:context=".Game4x3activity"
+            android:clipChildren="false">
 
 
         </GridLayout>
