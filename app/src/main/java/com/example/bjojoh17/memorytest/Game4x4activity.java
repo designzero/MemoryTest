@@ -194,8 +194,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button1.getY() - button1.getHeight());
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
-        PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
-        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2, pvhA2);
+        //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
+        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
         animator2.setDuration(duration);
         isBusy = true;
