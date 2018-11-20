@@ -1,6 +1,7 @@
 package com.example.bjojoh17.memorytest;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -158,12 +159,16 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     protected void switchSides() {
         if (turn == 2) {
             pl1ScoreText.setTextColor(Color.BLACK);
+            pl1ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
+            pl2ScoreText.setTypeface(Typeface.DEFAULT);
             pl2ScoreText.setTextColor(Color.GRAY);
             turn = 1;
         }
         else {
             pl1ScoreText.setTextColor(Color.GRAY);
+            pl1ScoreText.setTypeface(Typeface.DEFAULT);
             pl2ScoreText.setTextColor(Color.BLACK);
+            pl2ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
             turn = 2;
         }
     }
