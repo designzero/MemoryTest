@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class Game4x4activity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int numberMatched;
     private int numberOfElements;
@@ -67,7 +67,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
         pl1ScoreText = findViewById(R.id.pl1_score);
         pl2ScoreText = findViewById(R.id.pl2_score);
-        System.out.println("XX " + duo);
+
         if (duo) {
             turn = 2;
             switchSides();

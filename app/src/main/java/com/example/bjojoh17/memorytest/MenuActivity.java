@@ -1,8 +1,6 @@
 package com.example.bjojoh17.memorytest;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
         buttonSolo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, Game4x4activity.class);
+                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 intent.putExtra("duo", false);
                 startActivity(intent);
             }
@@ -34,7 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         buttonDuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, Game4x4activity.class);
+                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 intent.putExtra("duo", true);
                 startActivity(intent);
             }
