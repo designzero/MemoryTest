@@ -452,7 +452,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     isBusy = false;
                     switchSides();
                 }
-            }, 1000);
+            }, 1500);
         }
     }
 
