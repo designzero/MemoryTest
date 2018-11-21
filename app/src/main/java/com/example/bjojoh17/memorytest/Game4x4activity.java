@@ -3,6 +3,7 @@ package com.example.bjojoh17.memorytest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -181,19 +182,21 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     }
 
     protected void animateMatched(final MemoryButton button2) {
-        final DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+        final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
 
         final MemoryButton button1 = selectedButton1;
 
-        final int duration = 1000;
-        final int duration2 = 1000;
+        final float scaleValue = 4;
+        final float button1WidthAfterScale = button1.getWidth() * scaleValue;
+
+        final int duration = 1000;        final int duration2 = 1000;
 
         button1.bringToFront();
 
-        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button1.getX() - button1.getWidth());
+        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - (button1.getX() + (button1WidthAfterScale / 2)));
         PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button1.getY() - button1.getHeight());
-        PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
-        PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
+        PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", scaleValue);
+        PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", scaleValue);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
         ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
@@ -225,7 +228,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
         button2.bringToFront();
 
-        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button2.getX() - button2.getWidth());
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - (button2.getX() + (button2.getWidth() / 2)));
         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button2.getY() - button2.getHeight());
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
@@ -248,7 +251,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     public void run() {
                         isBusy = false;
                         PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - (metrics.density * button2.getWidth()));
-                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (- metrics.heightPixels / 2 + (metrics.density * button2.getHeight() + metrics.density * 30)));
+                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (- metrics.heightPixels / 2 + (metrics.density * button2.getHeight() / 2)));
                         PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f);
                         PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.0f);
                         PropertyValuesHolder pvhA3 = PropertyValuesHolder.ofFloat("alpha", 0.0f);
@@ -265,7 +268,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
                             @Override
                             public void onAnimationEnd(Animator animator3) {
-                                button2.setVisibility(View.GONE);
+                                button2.setVisibility(View.INVISIBLE);
                             }
 
                             @Override
