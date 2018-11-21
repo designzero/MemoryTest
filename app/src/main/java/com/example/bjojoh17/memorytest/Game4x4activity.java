@@ -3,6 +3,7 @@ package com.example.bjojoh17.memorytest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -12,15 +13,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.Random;
 
 public class Game4x4activity extends AppCompatActivity implements View.OnClickListener {
@@ -40,7 +37,13 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
     private TextView pl2ScoreText;
     private int pl1Score = 0;
     private int pl2Score = 0;
-    private int turn = 2;
+    private int turn = 0;
+
+    private int flipDelay = 1500;
+    private int matchedShowDuration = 1000;
+    private int zoomInDuration = 1000;
+    private int zoomOutDuration = 1000;
+    private int showZoomedDuration= 1500;
 
     private TextView textEnd;
 
@@ -64,15 +67,16 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
         pl1ScoreText = findViewById(R.id.pl1_score);
         pl2ScoreText = findViewById(R.id.pl2_score);
-
+        System.out.println("XX " + duo);
         if (duo) {
-            Log.d("Duo","Duo mode engaged!");
+            turn = 2;
             switchSides();
         }
 
         else {
             pl1ScoreText.setVisibility(View.INVISIBLE);
-            pl2ScoreText.setVisibility(View.INVISIBLE);
+
+            pl2ScoreText.setText("Par:  0");
         }
 
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
@@ -171,7 +175,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
             pl2ScoreText.setTextColor(Color.GRAY);
             turn = 1;
         }
-        else {
+        if (turn == 1) {
             pl1ScoreText.setTextColor(Color.GRAY);
             pl1ScoreText.setTypeface(Typeface.DEFAULT);
             pl2ScoreText.setTextColor(Color.BLACK);
@@ -180,24 +184,37 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    public int getViewCoords(View v, String value){
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+        if (value == "x") {
+            return x;
+        }
+        if (value == "y") {
+            return y;
+        }
+        else {
+            return x+y;
+        }
+    }
+
     protected void animateMatched(final MemoryButton button2) {
-        final DisplayMetrics metrics = super.getResources().getDisplayMetrics();
+        final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
 
         final MemoryButton button1 = selectedButton1;
 
-        final int duration = 1000;
-        final int duration2 = 1000;
-
         button1.bringToFront();
 
-        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button1.getX() - button1.getWidth());
-        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button1.getY() - button1.getHeight());
+        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() /2);
+        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels  / 2 - button1.getY() - button1.getHeight() / 2);
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
         ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
-        animator2.setDuration(duration);
+        animator2.setDuration(zoomInDuration);
         isBusy = true;
         animator2.start();
 
@@ -225,13 +242,13 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
         button2.bringToFront();
 
-        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - button2.getX() - button2.getWidth());
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", (metrics.heightPixels + metrics.density * 70 / 2) / 2 - button2.getY() - button2.getHeight());
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button2, "x") - button2.getWidth() /2);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels / 2 - button2.getY() - button2.getHeight() / 2);
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.setDuration(duration);
+        animator.setDuration(zoomInDuration);
         animator.start();
 
         animator.addListener(new Animator.AnimatorListener() {
@@ -247,14 +264,15 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void run() {
                         isBusy = false;
-                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - (metrics.density * button2.getWidth()));
-                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (- metrics.heightPixels / 2 + (metrics.density * button2.getHeight() + metrics.density * 30)));
-                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.0f);
-                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.0f);
+
+                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - button2.getWidth());
+                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y",  - getViewCoords(button2, "y"));
+                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.1f);
+                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.1f);
                         PropertyValuesHolder pvhA3 = PropertyValuesHolder.ofFloat("alpha", 0.0f);
                         ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhA3);
                         animator3.setInterpolator(new AccelerateDecelerateInterpolator());
-                        animator3.setDuration(duration2);
+                        animator3.setDuration(zoomOutDuration);
                         animator3.start();
 
                         animator3.addListener(new Animator.AnimatorListener() {
@@ -265,7 +283,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
                             @Override
                             public void onAnimationEnd(Animator animator3) {
-                                button2.setVisibility(View.GONE);
+                                button2.setVisibility(View.INVISIBLE);
+                                addScore();
                             }
 
                             @Override
@@ -279,7 +298,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                             }
                         });
                     }
-                }, 1500);
+                }, showZoomedDuration);
             }
 
             @Override
@@ -296,10 +315,16 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
 
 
     protected void addScore() {
+        if (turn == 0) {
+            pl2ScoreText.setText("Par:  " + numberMatched);
+        }
+
         if (turn == 1) {
             pl1Score++;
             pl1ScoreText.setText("Spelare 1:  " + pl1Score);
-        } else {
+        }
+
+        if (turn == 2) {
             pl2Score++;
             pl2ScoreText.setText("Spelare 2:  " + pl2Score);
         }
@@ -390,6 +415,8 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void run() {
 
+                    numberMatched++;
+
                     if (duo) {
                         selectedButton1.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
@@ -401,7 +428,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     }
 
                     selectedButton1 = null;
-                    numberMatched++;
+
 
                     //showEndScore("Bra jobbat!");  //Test
 
@@ -430,7 +457,7 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 }
-            }, 1000);
+            }, matchedShowDuration);
             //slut
 
         }
@@ -450,9 +477,11 @@ public class Game4x4activity extends AppCompatActivity implements View.OnClickLi
                     selectedButton1 = null;
                     selectedButton2 = null;
                     isBusy = false;
-                    switchSides();
+                    if (duo) {
+                        switchSides();
+                    }
                 }
-            }, 1500);
+            }, flipDelay);
         }
     }
 
