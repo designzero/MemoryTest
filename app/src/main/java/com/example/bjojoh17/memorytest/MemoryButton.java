@@ -3,8 +3,10 @@ package com.example.bjojoh17.memorytest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -38,16 +40,17 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
 
         GridLayout.LayoutParams tempParams = new GridLayout.LayoutParams(GridLayout.spec(r), GridLayout.spec(c));
 
-        int metrics = getResources().getDisplayMetrics().heightPixels / 5;
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        int buttonMetrics = metrics.heightPixels / 5;
         //int metrics = (int) getResources().getDisplayMetrics().density * 150;
 
         /*tempParams.width = (int) getResources().getDisplayMetrics().density * 50 * 4;
         tempParams.height = (int) getResources().getDisplayMetrics().density * 50 * 3;
 
 */
-        tempParams.width = (int) (metrics * 1.33);
-        tempParams.height = metrics;
-        tempParams.setMargins(metrics/4,metrics/4,metrics/4,metrics/4);
+        tempParams.width = (int) (buttonMetrics * 1.33);
+        tempParams.height = buttonMetrics;
+        tempParams.setMargins(buttonMetrics/4,buttonMetrics/4,buttonMetrics/4,buttonMetrics/4);
 
         setLayoutParams(tempParams);
 
