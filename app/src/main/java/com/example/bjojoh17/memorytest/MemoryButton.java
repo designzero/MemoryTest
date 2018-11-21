@@ -8,9 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 
 public class MemoryButton extends android.support.v7.widget.AppCompatImageButton {
 
@@ -76,7 +74,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
         }
 
         if(isFlipped) {
-            Game4x4activity.setBusy(true);
+            GameActivity.setBusy(true);
             //Animera brickan halvvägs (så den blir osynlig)
             ObjectAnimator animation = ObjectAnimator.ofFloat(tempButton, "rotationY", 360f, 270f);
             animation.setDuration(200);
@@ -101,7 +99,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
                     animation2.setDuration(200);
                     animation2.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation2.start();
-                    Game4x4activity.setBusy(false);
+                    GameActivity.setBusy(false);
                 }
 
                 @Override
