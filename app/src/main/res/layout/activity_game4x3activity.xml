@@ -63,7 +63,7 @@
             android:columnCount="4"
             android:gravity="center"
             android:rowCount="3"
-            tools:context=".Game4x3activity">
+            tools:context=".GameActivity">
 
 
         </GridLayout>

@@ -45,8 +45,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int zoomOutDuration = 1000;
     private int showZoomedDuration= 1500;
 
-    private TextView textEnd;
-
     private boolean duo;
 
     private static boolean isBusy = false;
@@ -75,7 +73,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         else {
             pl1ScoreText.setVisibility(View.INVISIBLE);
-
             pl2ScoreText.setText("Par:  0");
         }
 
@@ -175,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             pl2ScoreText.setTextColor(Color.GRAY);
             turn = 1;
         }
-        if (turn == 1) {
+        else if (turn == 1) {
             pl1ScoreText.setTextColor(Color.GRAY);
             pl1ScoreText.setTypeface(Typeface.DEFAULT);
             pl2ScoreText.setTextColor(Color.BLACK);
