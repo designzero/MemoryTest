@@ -455,8 +455,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                     //showEndScore("Bra jobbat!");  //Test
 
-                    if (numberMatched == numberOfElements / 2) {
-                    //if (numberMatched == 1) {
+                    //if (numberMatched == numberOfElements / 2) {
+                    if (numberMatched == 1) { // test mode
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");
