@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MenuFragment">
@@ -11,10 +12,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="50dp"
+        android:alpha="0.8"
         android:padding="10dp"
         android:text="@string/title_memory"
+        android:textColor="@android:color/background_light"
         android:textSize="75sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -32,14 +35,13 @@
         android:textSize="36sp" />
 
     <Button
-    android:id="@+id/button_duo"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:text="@string/menu_option_duo_game"
-    android:textAllCaps="false"
-    android:textSize="36sp" />
-
+        android:id="@+id/button_duo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/menu_option_duo_game"
+        android:textAllCaps="false"
+        android:textSize="36sp" />
 
 
 </LinearLayout>

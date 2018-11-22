@@ -5,4 +5,8 @@
     <string name="menu_option_duo_game">Två spelare</string>
     <string name="back_button">Avsluta</string>
     <string name="end_screen_title">Bra jobbat!</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -1,43 +1,45 @@
 package com.example.bjojoh17.memorytest;
 
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-public class MenuActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private Button buttonSolo;
-    private Button buttonDuo;
+    FragmentTransaction ft;
+    Fragment menuFragment;
+    Fragment gameFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideSystemUI();
-        setContentView(R.layout.activity_menu);
 
-        buttonSolo = findViewById(R.id.button_solo);
-        buttonDuo = findViewById(R.id.button_duo);
+        setContentView(R.layout.activity_main);
 
-        buttonSolo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
-                intent.putExtra("duo", false);
-                startActivity(intent);
-            }
-        });
+        menuFragment = new MenuFragment();
+        gameFragment = new GameFragment();
 
-        buttonDuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, GameActivity.class);
-                intent.putExtra("duo", true);
-                startActivity(intent);
-            }
-        });
+        gotoMenu();
     }
+
+    public void gotoMenu() {
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, menuFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void gotoGame(boolean isDuo) {
+        GameFragment.setDuo(isDuo);
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, gameFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+
 
     //Fullscreen mode
     @Override
@@ -64,5 +66,4 @@ public class MenuActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
-
 }

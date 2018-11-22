@@ -23,7 +23,7 @@ public class MenuActivityDifficulty extends AppCompatActivity {
         buttonSolo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivityDifficulty.this, GameActivity.class);
+                Intent intent = new Intent(MenuActivityDifficulty.this, GameFragment.class);
                 intent.putExtra("duo", false);
                 startActivity(intent);
             }
@@ -32,7 +32,7 @@ public class MenuActivityDifficulty extends AppCompatActivity {
         buttonDuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivityDifficulty.this, GameActivity.class);
+                Intent intent = new Intent(MenuActivityDifficulty.this, GameFragment.class);
                 intent.putExtra("duo", true);
                 startActivity(intent);
             }

@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_gravity="center"
     android:tag="endScoreDialog">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="600dp"
+        android:layout_height="400dp"
         android:background="@color/button_blue"
-        android:minWidth="800dp"
-        android:minHeight="500dp">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/text_game_end"

@@ -3,18 +3,19 @@ package com.example.bjojoh17.memorytest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameFragment extends Fragment implements View.OnClickListener {
 
 
     private int gameRows = 3;
@@ -53,7 +54,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int zoomOutDuration = 1000;
     private int showZoomedDuration= 1500;
 
-    private boolean duo;
+    private static boolean duo;
+
+    public static boolean isDuo() {
+        return duo;
+    }
+
+    public static void setDuo(boolean playDuo) {
+        duo = playDuo;
+    }
 
     private static boolean isBusy = false;
 
@@ -68,16 +77,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout buttonContainer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        hideSystemUI();
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        // Defines the xml file for the fragment
+        return inflater.inflate(R.layout.fragment_game, parent, false);
+    }
 
-        duo = (boolean) getIntent().getExtras().get("duo");
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initGame();
+    }
 
-        setContentView(R.layout.activity_game4x3activity);
+    public void initGame() {
+        gameRows = 3;
+        gameColumns = 4;
 
-        pl1ScoreText = findViewById(R.id.pl1_score);
-        pl2ScoreText = findViewById(R.id.pl2_score);
+        numberMatched = 0;
+
+        pl1Score = 0;
+        pl2Score = 0;
+        turn = 0;
+
+
+        pl1ScoreText = getActivity().findViewById(R.id.pl1_score);
+        pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
 
         if (duo) {
             turn = 2;
@@ -89,20 +112,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             pl2ScoreText.setText("Par:  0");
         }
 
-        buttonContainer = findViewById(R.id.button_container);
+        buttonContainer = getActivity().findViewById(R.id.button_container);
 
-        GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
+        GridLayout gridLayout = getActivity().findViewById(R.id.grid_layout);
         gridLayout.setRowCount(gameRows);
         gridLayout.setColumnCount(gameColumns);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-        Button backButton = findViewById(R.id.backButton);
+        Button backButton = getActivity().findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                ((MainActivity)getActivity()).gotoMenu();
             }
         });
 
@@ -167,7 +190,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         for(int r = 0; r < numRows; r++){
             for(int c = 0; c < numColumns; c++){
-                MemoryButton tempButton = new MemoryButton(this, r, c, buttonGraphics[buttonGraphicIndexes[r * numColumns + c]]);
+                MemoryButton tempButton = new MemoryButton(getContext(), r, c, buttonGraphics[buttonGraphicIndexes[r * numColumns + c]]);
                 tempButton.setId(View.generateViewId());
                 tempButton.setOnClickListener(this);
 
@@ -372,21 +395,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void showEndScore(String endMessage) {
 
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
+        Fragment endScore = new EndScoreDialog();
 
-        android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
-        android.app.Fragment prev = getFragmentManager().findFragmentByTag("endScoreDialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
+        FragmentTransaction ft;
+        ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.game_fragment_container, endScore);
         ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        EndScoreDialog esd = new EndScoreDialog();
-        esd.setMessage(endMessage);
-        esd.show(getSupportFragmentManager(), "endScoreDialog");
+        ft.commit();
+        ((EndScoreDialog) endScore).setMessage(endMessage);
     }
 
     @Override
@@ -509,31 +525,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }, flipDelay);
         }
     }
-
-    //Fullscreen mode
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            hideSystemUI();
-        }
-    }
-
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        // Set the content to appear under the system bars so that the
-                        // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
 }

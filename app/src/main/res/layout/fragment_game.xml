@@ -7,6 +7,7 @@
     android:clipChildren="false"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -47,6 +48,12 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/game_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
@@ -56,7 +63,6 @@
         android:orientation="vertical">
 
         <GridLayout
-
             android:id="@+id/grid_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,8 +73,7 @@
             android:rowCount="3"
             tools:context=".GameFragment">
 
-
         </GridLayout>
     </LinearLayout>
-
+    </FrameLayout>
 </LinearLayout>

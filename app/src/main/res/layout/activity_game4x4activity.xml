@@ -8,6 +8,6 @@
     android:layout_gravity="center"
     android:columnCount="4"
     android:rowCount="4"
-    tools:context=".GameActivity">
+    tools:context=".GameFragment">
 
 </GridLayout>
