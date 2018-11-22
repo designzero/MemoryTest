@@ -32,13 +32,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoGame(boolean isDuo) {
+
         GameFragment.setDuo(isDuo);
+
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, gameFragment);
         ft.addToBackStack(null);
         ft.commit();
     }
-
 
 
     //Fullscreen mode
