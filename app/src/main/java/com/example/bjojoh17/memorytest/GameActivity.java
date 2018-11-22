@@ -7,8 +7,11 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +19,16 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    private int gameRows = 3;
+    private int gameColumns = 4;
 
     private int numberMatched;
     private int numberOfElements;
@@ -53,6 +61,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         isBusy = busy;
     }
 
+    Vibrator vibrator;
+    private int vibrateShort = 100;
+    private int vibrateLong = 500;
+
+    LinearLayout buttonContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +89,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             pl2ScoreText.setText("Par:  0");
         }
 
+        buttonContainer = findViewById(R.id.button_container);
+
         GridLayout gridLayout = findViewById(R.id.grid_layout_4x3);
-        gridLayout.setRowCount(3);
-        gridLayout.setColumnCount(4);
+        gridLayout.setRowCount(gameRows);
+        gridLayout.setColumnCount(gameColumns);
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         Button backButton = findViewById(R.id.backButton);
 
@@ -107,12 +124,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //buttonGraphics[6] = R.drawable.button_7;
         //buttonGraphics[7] = R.drawable.button_8;
 
-        buttonGraphics[0] = R.drawable.button_11;
-        buttonGraphics[1] = R.drawable.button_12;
-        buttonGraphics[2] = R.drawable.button_13;
-        buttonGraphics[3] = R.drawable.button_14;
-        buttonGraphics[4] = R.drawable.button_15;
-        buttonGraphics[5] = R.drawable.button_16;
+        if (gameColumns * gameRows == 12) {
+            buttonGraphics[0] = R.drawable.button_11;
+            buttonGraphics[1] = R.drawable.button_12;
+            buttonGraphics[2] = R.drawable.button_13;
+            buttonGraphics[3] = R.drawable.button_14;
+            buttonGraphics[4] = R.drawable.button_15;
+            buttonGraphics[5] = R.drawable.button_16;
+        }
 
        /* // array of supported extensions (use a List if you prefer)
         final String[] EXTENSIONS = new String[]{
@@ -144,7 +163,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        shuffleButtonGraphics();
+        //shuffleButtonGraphics();
 
         for(int r = 0; r < numRows; r++){
             for(int c = 0; c < numColumns; c++){
@@ -166,16 +185,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void switchSides() {
         if (turn == 2) {
-            pl1ScoreText.setTextColor(Color.BLACK);
+            pl1ScoreText.setTextColor(getResources().getColor(R.color.button_blue));
             pl1ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
             pl2ScoreText.setTypeface(Typeface.DEFAULT);
-            pl2ScoreText.setTextColor(Color.GRAY);
+            pl2ScoreText.setTextColor(Color.WHITE);
             turn = 1;
         }
         else if (turn == 1) {
-            pl1ScoreText.setTextColor(Color.GRAY);
+            pl1ScoreText.setTextColor(Color.WHITE);
             pl1ScoreText.setTypeface(Typeface.DEFAULT);
-            pl2ScoreText.setTextColor(Color.BLACK);
+            pl1ScoreText.setTextColor(getResources().getColor(R.color.button_blue));
             pl2ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
             turn = 2;
         }
@@ -202,10 +221,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         final MemoryButton button1 = selectedButton1;
 
+        GridLayout.LayoutParams lp = (GridLayout.LayoutParams) button1.getLayoutParams();
+
         button1.bringToFront();
 
         PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() /2);
-        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels  / 2 - button1.getY() - button1.getHeight() / 2);
+        //PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", buttonContainer.getHeight() / 2 - getViewCoords(button1, "y") + button1.getHeight() / 2);
+        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  buttonContainer.getHeight() / 2 - (lp.topMargin + button1.getY() + button1.getHeight() / 2));
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
@@ -240,7 +262,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         button2.bringToFront();
 
         PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button2, "x") - button2.getWidth() /2);
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels / 2 - button2.getY() - button2.getHeight() / 2);
+        //PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels / 2 - getViewCoords(button2, "y") + button2.getHeight() / 2);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  buttonContainer.getHeight() / 2 - (lp.topMargin + button2.getY() + button2.getHeight() / 2));
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
@@ -377,6 +400,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             return;
 
         if(selectedButton1 == null){
+
+            vibrator.vibrate(vibrateShort);
             selectedButton1 = button;
             selectedButton1.flip();
             return;
@@ -388,6 +413,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if(selectedButton1.getFrontDrawableId() == button.getFrontDrawableId()) {
             button.flip();
+            vibrator.vibrate(vibrateLong);
 
             button.setMatched(true);
             selectedButton1.setMatched(true);
@@ -430,6 +456,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     //showEndScore("Bra jobbat!");  //Test
 
                     if (numberMatched == numberOfElements / 2) {
+                    //if (numberMatched == 1) {
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");
@@ -450,7 +477,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                 public void run() {
                                     showEndScore("Bra jobbat!");
                                 }
-                            }, 3000);
+                            }, zoomInDuration + zoomOutDuration + showZoomedDuration);
                         }
                     }
                 }
@@ -460,6 +487,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else {
+            vibrator.vibrate(vibrateShort);
             selectedButton2 = button ;
             selectedButton2.flip();
             isBusy = true;
