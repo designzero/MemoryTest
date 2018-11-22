@@ -48,7 +48,11 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
 */
         tempParams.width = (int) (buttonMetrics * 1.33);
         tempParams.height = buttonMetrics;
-        tempParams.setMargins(buttonMetrics/4,buttonMetrics/4,buttonMetrics/4,buttonMetrics/4);
+        int bm = buttonMetrics / (GameFragment.getGameRows() + 1);
+        if (GameFragment.getGameRows() == 4) {
+            bm = buttonMetrics / (GameFragment.getGameRows() + 6);
+        }
+        tempParams.setMargins(bm,bm,bm,bm);
 
         setLayoutParams(tempParams);
 
@@ -74,7 +78,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
         }
 
         if(isFlipped) {
-            GameActivity.setBusy(true);
+            GameFragment.setBusy(true);
             //Animera brickan halvvägs (så den blir osynlig)
             ObjectAnimator animation = ObjectAnimator.ofFloat(tempButton, "rotationY", 360f, 270f);
             animation.setDuration(200);
@@ -99,7 +103,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
                     animation2.setDuration(200);
                     animation2.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation2.start();
-                    GameActivity.setBusy(false);
+                    GameFragment.setBusy(false);
                 }
 
                 @Override
