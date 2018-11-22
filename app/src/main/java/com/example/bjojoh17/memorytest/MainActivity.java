@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentTransaction ft;
     Fragment menuFragment;
+    Fragment menuFragmentDifficulty;
     Fragment gameFragment;
 
     @Override
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         menuFragment = new MenuFragment();
+        menuFragmentDifficulty = new MenuFragmentDifficulty();
         gameFragment = new GameFragment();
 
         gotoMenu();
@@ -31,14 +33,24 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    public void gotoGame(boolean isDuo) {
-
-        GameFragment.setDuo(isDuo);
-
+    public void gotoDiffMenu() {
         ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, menuFragmentDifficulty);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void gotoGame() {
+        ft = getSupportFragmentManager().beginTransaction();
+        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.replace(R.id.fragment_container, gameFragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    public void setDifficulty(int columns, int rows) {
+        GameFragment.setGameRows(rows);
+        GameFragment.setGameColumns(columns);
     }
 
 

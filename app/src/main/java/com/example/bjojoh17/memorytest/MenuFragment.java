@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MenuFragment extends Fragment {
 
+    private Button buttonBack;
     private Button buttonSolo;
     private Button buttonDuo;
 
@@ -22,20 +23,30 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        buttonBack = getActivity().findViewById(R.id.button_back2);
         buttonSolo = getActivity().findViewById(R.id.button_solo);
         buttonDuo = getActivity().findViewById(R.id.button_duo);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
         buttonSolo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).gotoGame(false);
+                GameFragment.setDuo(false);
+                ((MainActivity)getActivity()).gotoDiffMenu();
             }
         });
 
         buttonDuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).gotoGame(true);
+                GameFragment.setDuo(true);
+                ((MainActivity)getActivity()).gotoDiffMenu();
             }
         });
     }

@@ -27,9 +27,20 @@ import java.util.Random;
 
 public class GameFragment extends Fragment implements View.OnClickListener {
 
+    private static int gameRows;
+    private static int gameColumns;
 
-    private int gameRows = 3;
-    private int gameColumns = 4;
+    public static int getGameRows() {
+        return gameRows;
+    }
+
+    public static void setGameRows(int nRgameRows) {
+        gameRows = nRgameRows;
+    }
+
+    public static void setGameColumns(int nRgameColumns) {
+        gameColumns = nRgameColumns;
+    }
 
     private int numberMatched;
     private int numberOfElements;
@@ -89,8 +100,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initGame() {
-        gameRows = 3;
-        gameColumns = 4;
 
         numberMatched = 0;
 
@@ -120,7 +129,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-        Button backButton = getActivity().findViewById(R.id.backButton);
+        Button backButton = getActivity().findViewById(R.id.button_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,13 +156,31 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         //buttonGraphics[6] = R.drawable.button_7;
         //buttonGraphics[7] = R.drawable.button_8;
 
-        if (gameColumns * gameRows == 12) {
+        if (gameColumns * gameRows == 8) {
+            buttonGraphics[0] = R.drawable.button_11;
+            buttonGraphics[1] = R.drawable.button_12;
+            buttonGraphics[2] = R.drawable.button_13;
+            buttonGraphics[3] = R.drawable.button_14;
+        }
+
+        else if (gameColumns * gameRows == 12) {
             buttonGraphics[0] = R.drawable.button_11;
             buttonGraphics[1] = R.drawable.button_12;
             buttonGraphics[2] = R.drawable.button_13;
             buttonGraphics[3] = R.drawable.button_14;
             buttonGraphics[4] = R.drawable.button_15;
             buttonGraphics[5] = R.drawable.button_16;
+        }
+
+        else if (gameColumns * gameRows == 16) {
+            buttonGraphics[0] = R.drawable.button_11;
+            buttonGraphics[1] = R.drawable.button_12;
+            buttonGraphics[2] = R.drawable.button_13;
+            buttonGraphics[3] = R.drawable.button_14;
+            buttonGraphics[4] = R.drawable.button_15;
+            buttonGraphics[5] = R.drawable.button_16;
+            buttonGraphics[6] = R.drawable.button_15;
+            buttonGraphics[7] = R.drawable.button_16;
         }
 
        /* // array of supported extensions (use a List if you prefer)
