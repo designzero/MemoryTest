@@ -5,8 +5,11 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -19,10 +22,13 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Random;
 
 public class GameFragment extends Fragment implements View.OnClickListener {
@@ -86,11 +92,18 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private int vibrateLong = 500;
 
     LinearLayout buttonContainer;
+    FrameLayout gameFragmentContainer;
+    GridLayout gridLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_game, parent, false);
+        if (duo) {
+            return inflater.inflate(R.layout.fragment_game_multi, parent, false);
+        }
+        else {
+            return inflater.inflate(R.layout.fragment_game, parent, false);
+        }
     }
 
     @Override
@@ -104,24 +117,26 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         numberMatched = 0;
 
         pl1Score = 0;
-        pl2Score = 0;
-        turn = 0;
-
 
         pl1ScoreText = getActivity().findViewById(R.id.pl1_score);
-        pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
+
 
         if (duo) {
+            pl2Score = 0;
+            pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
             turn = 2;
             switchSides();
         }
 
         else {
-            pl1ScoreText.setVisibility(View.INVISIBLE);
-            pl2ScoreText.setText("Par:  0");
+            turn = 0;
+            //pl1ScoreText.setVisibility(View.INVISIBLE);
+            pl1ScoreText.setText("0");
         }
 
         buttonContainer = getActivity().findViewById(R.id.button_container);
+        gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
+        gridLayout = getActivity().findViewById(R.id.grid_layout);
 
         GridLayout gridLayout = getActivity().findViewById(R.id.grid_layout);
         gridLayout.setRowCount(gameRows);
@@ -233,6 +248,38 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    protected void loadImages() {
+        // array of supported extensions (use a List if you prefer)
+        final String[] EXTENSIONS = new String[]{
+                "gif", "png", "bmp" // and other formats you need
+        };
+        // filter to identify images based on their extensions
+        final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+            @Override
+            public boolean accept(final File dir, final String name) {
+                for (final String ext : EXTENSIONS) {
+                    if (name.endsWith("." + ext)) {
+                        return (true);
+                    }
+                }
+                return (false);
+            }
+        };
+
+        String dirPath = Environment.getExternalStorageDirectory().toString()+"/Pictures";
+        File dir = new File(dirPath);
+        File[] filelist = dir.listFiles(IMAGE_FILTER );
+        for (File f : filelist) {
+            // do your stuff here
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),bmOptions);
+            //bitmap = Bitmap.createScaledBitmap(bitmap,parent.getWidth(),parent.getHeight(),true);
+            //imageView.setImageBitmap(bitmap);
+        }
+    }
+
+
     protected void switchSides() {
         if (turn == 2) {
             pl1ScoreText.setTextColor(getResources().getColor(R.color.button_blue));
@@ -275,9 +322,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         button1.bringToFront();
 
+        System.out.println("XX " + gridLayout.getY());
+
         PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() /2);
         //PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", buttonContainer.getHeight() / 2 - getViewCoords(button1, "y") + button1.getHeight() / 2);
-        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  buttonContainer.getHeight() / 2 - (lp.topMargin + button1.getY() + button1.getHeight() / 2));
+        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 - (lp.topMargin + button1.getY() + button1.getHeight() / 2) - gridLayout.getY());
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
@@ -313,7 +362,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button2, "x") - button2.getWidth() /2);
         //PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels / 2 - getViewCoords(button2, "y") + button2.getHeight() / 2);
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  buttonContainer.getHeight() / 2 - (lp.topMargin + button2.getY() + button2.getHeight() / 2));
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 - (lp.topMargin + button2.getY() + button2.getHeight() / 2) - gridLayout.getY());
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
@@ -335,12 +384,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     public void run() {
                         isBusy = false;
 
-                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - button2.getWidth());
-                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y",  - getViewCoords(button2, "y"));
+                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - button2.getWidth() - gridLayout.getX());
+                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y",  - getViewCoords(button2, "y") - gridLayout.getY());
                         PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.1f);
                         PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.1f);
-                        PropertyValuesHolder pvhA3 = PropertyValuesHolder.ofFloat("alpha", 0.0f);
-                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhA3);
+                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
                         animator3.setInterpolator(new AccelerateDecelerateInterpolator());
                         animator3.setDuration(zoomOutDuration);
                         animator3.start();
@@ -386,7 +434,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void addScore() {
         if (turn == 0) {
-            pl2ScoreText.setText("Par:  " + numberMatched);
+            pl1ScoreText.setText("" + numberMatched);
         }
 
         if (turn == 1) {
@@ -498,8 +546,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                     //showEndScore("Bra jobbat!");  //Test
 
-                    //if (numberMatched == numberOfElements / 2) {
-                    if (numberMatched == 1) { // test mode
+                    if (numberMatched == numberOfElements / 2) {
+                    //if (numberMatched == 1) { // test mode
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");

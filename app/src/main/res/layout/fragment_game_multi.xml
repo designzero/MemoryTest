@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,26 +25,23 @@
             android:textAllCaps="false"
             android:textSize="30sp" />
 
-        <FrameLayout
-            android:layout_width="660dp"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/pairsymbol" />
-
         <TextView
             android:id="@+id/pl1_score"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0"
-            android:textAlignment="viewStart"
+            android:text="Spelare 1:  0"
+            android:textColor="@android:color/background_light"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/pl2_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:text="Spelare 2:  0"
+            android:textAlignment="viewEnd"
             android:textColor="@android:color/background_light"
             android:textSize="36sp" />
 
@@ -55,12 +51,12 @@
         android:id="@+id/game_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false">
+        android:layout_gravity="center">
 
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
         android:gravity="center"
         android:orientation="vertical">
