@@ -67,9 +67,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private int flipDelay = 1500;
     private int matchedShowDuration = 1000;
-    private int zoomInDuration = 1000;
-    private int zoomOutDuration = 1000;
-    private int showZoomedDuration= 1500;
+    private int zoomInDuration = 1500;
+    private int zoomOutDuration = 1500;
+    private int showZoomedDuration= 2000;
 
     private static boolean duo;
 
