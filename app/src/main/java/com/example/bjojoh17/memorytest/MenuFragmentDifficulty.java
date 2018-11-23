@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MenuFragmentDifficulty extends Fragment {
 
+    private Button backButton;
     private Button buttonEasy;
     private Button buttonMedium;
     private Button buttonHard;
@@ -23,9 +24,18 @@ public class MenuFragmentDifficulty extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        backButton = getActivity().findViewById(R.id.button_back3);
         buttonEasy = getActivity().findViewById(R.id.button_easy);
         buttonMedium = getActivity().findViewById(R.id.button_medium);
         buttonHard = getActivity().findViewById(R.id.button_hard);
+
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).gotoMenu();
+            }
+        });
 
         buttonEasy.setOnClickListener(new View.OnClickListener() {
             @Override
