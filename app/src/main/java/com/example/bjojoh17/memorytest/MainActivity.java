@@ -1,5 +1,6 @@
 package com.example.bjojoh17.memorytest;
 
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,12 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     FragmentTransaction ft;
-    Fragment menuFragment;
-    Fragment menuFragmentDifficulty;
-    Fragment gameFragment;
+
+    private Fragment menuFragment;
+    private Fragment menuFragmentDifficulty;
+    private Fragment gameFragment;
+
+    public MediaPlayer flipSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         menuFragment = new MenuFragment();
         menuFragmentDifficulty = new MenuFragmentDifficulty();
         gameFragment = new GameFragment();
+
+        flipSound = MediaPlayer.create(this, R.raw.flip2);
 
         gotoMenu();
     }

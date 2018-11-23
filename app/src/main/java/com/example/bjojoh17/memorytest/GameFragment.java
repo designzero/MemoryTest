@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.icu.text.SymbolTable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -149,7 +150,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).gotoMenu();
+                if (!isBusy) {
+                    System.out.println("XX " + isBusy);
+                    ((MainActivity) getActivity()).gotoMenu();
+                }
             }
         });
 
@@ -235,6 +239,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 MemoryButton tempButton = new MemoryButton(getContext(), r, c, buttonGraphics[buttonGraphicIndexes[r * numColumns + c]]);
                 tempButton.setId(View.generateViewId());
                 tempButton.setOnClickListener(this);
+                tempButton.setSoundEffectsEnabled(false);
 
                 //Vrid brickorna - start
                 //int buttonRotation = new Random().nextInt(10) - 5;
@@ -314,6 +319,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     protected void animateMatched(final MemoryButton button2) {
+        isBusy = true;
         final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
 
         final MemoryButton button1 = selectedButton1;
@@ -333,7 +339,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
         animator2.setDuration(zoomInDuration);
-        isBusy = true;
         animator2.start();
 
         animator2.addListener(new Animator.AnimatorListener() {
@@ -382,7 +387,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        isBusy = false;
 
                         PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - button2.getWidth() - gridLayout.getX());
                         PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y",  - getViewCoords(button2, "y") - gridLayout.getY());
@@ -403,6 +407,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                             public void onAnimationEnd(Animator animator3) {
                                 button2.setVisibility(View.INVISIBLE);
                                 addScore();
+                                isBusy = false;
                             }
 
                             @Override
@@ -491,7 +496,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             return;
 
         if(selectedButton1 == null){
-
+            ((MainActivity)getActivity()).flipSound.start();
             vibrator.vibrate(vibrateShort);
             selectedButton1 = button;
             selectedButton1.flip();
@@ -503,6 +508,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
 
         if(selectedButton1.getFrontDrawableId() == button.getFrontDrawableId()) {
+            isBusy = true;
+            ((MainActivity)getActivity()).flipSound.start();
             button.flip();
             vibrator.vibrate(vibrateLong);
 
@@ -512,17 +519,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             selectedButton1.setEnabled(false);
             button.setEnabled(false);
 
-
-            //Behåll brickorna efter matchning - start
-//            selectedButton1 = null;
-//            numberMatched++;
-//            if (numberMatched == numberOfElements / 2) {
-//                Toast toast = Toast.makeText(getApplicationContext(), "Bra jobbat!", Toast.LENGTH_SHORT); toast.show();
-//            }
-            //slut
-
-            //Ta bort brickorna efter matchning - start
-            isBusy = true;
             final Handler handler = new Handler();
 
             handler.postDelayed(new Runnable() {
@@ -546,8 +542,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                     //showEndScore("Bra jobbat!");  //Test
 
-                    if (numberMatched == numberOfElements / 2) {
-                    //if (numberMatched == 1) { // test mode
+                    //if (numberMatched == numberOfElements / 2) {
+                    if (numberMatched == 1) { // test mode
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");
@@ -578,6 +574,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
 
         else {
+            ((MainActivity)getActivity()).flipSound.start();
             vibrator.vibrate(vibrateShort);
             selectedButton2 = button ;
             selectedButton2.flip();
