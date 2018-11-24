@@ -40,12 +40,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
 
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         int buttonMetrics = metrics.heightPixels / 5;
-        //int metrics = (int) getResources().getDisplayMetrics().density * 150;
 
-        /*tempParams.width = (int) getResources().getDisplayMetrics().density * 50 * 4;
-        tempParams.height = (int) getResources().getDisplayMetrics().density * 50 * 3;
-
-*/
         tempParams.width = (int) (buttonMetrics * 1.33);
         tempParams.height = buttonMetrics;
         int bm = buttonMetrics / (GameFragment.getGameRows() + 1);

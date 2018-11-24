@@ -10,12 +10,12 @@
 
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/game_titlebar"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="@color/title_bar"
         android:clipChildren="false"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout2">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_back"
@@ -25,12 +25,12 @@
             android:textAllCaps="false"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="75dp"
-            tools:layout_conversion_absoluteWidth="139dp"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:layout_conversion_absoluteWidth="139dp" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/image_pair"
             android:layout_width="70dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

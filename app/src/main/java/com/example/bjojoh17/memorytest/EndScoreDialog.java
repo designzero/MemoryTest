@@ -47,7 +47,7 @@ public class EndScoreDialog extends Fragment {
         buttonPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                GameFragment.setBusy(false);
                // ((MainActivity)getActivity()).restartGame();
                 GameFragment fragment = (GameFragment)
                         getFragmentManager().findFragmentById(R.id.fragment_container);

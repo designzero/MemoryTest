@@ -16,6 +16,7 @@ import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.widget.ImageViewCompat;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -314,7 +316,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             return y;
         }
         else {
-            return x+y;
+            return 0;
         }
     }
 
@@ -324,17 +326,15 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         final MemoryButton button1 = selectedButton1;
 
-        GridLayout.LayoutParams lp = (GridLayout.LayoutParams) button1.getLayoutParams();
+        final ImageView pairSymbol;
+        pairSymbol = getActivity().findViewById(R.id.image_pair);
 
         button1.bringToFront();
 
-        System.out.println("XX " + gridLayout.getY());
-
-        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() /2);
-        //PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY", buttonContainer.getHeight() / 2 - getViewCoords(button1, "y") + button1.getHeight() / 2);
-        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 - (lp.topMargin + button1.getY() + button1.getHeight() / 2) - gridLayout.getY());
-        PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 4);
-        PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 4);
+        PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() / 2);
+        PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 + gameFragmentContainer.getY() - getViewCoords(button1, "y") - button1.getHeight() / 2);
+        PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 3.7f);
+        PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 3.7f);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
         ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
@@ -366,8 +366,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         button2.bringToFront();
 
         PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button2, "x") - button2.getWidth() /2);
-        //PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY", metrics.heightPixels / 2 - getViewCoords(button2, "y") + button2.getHeight() / 2);
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 - (lp.topMargin + button2.getY() + button2.getHeight() / 2) - gridLayout.getY());
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 + gameFragmentContainer.getY() - getViewCoords(button2, "y") - button2.getHeight() / 2);
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
@@ -383,16 +382,27 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animator) {
+                System.out.println("XX  Button dw " + metrics.widthPixels);
+                System.out.println("XX  Button glx " + gridLayout.getX());
+                System.out.println("XX  Button gfx " + getViewCoords(gameFragmentContainer, "x"));
+                System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
+                System.out.println("XX  Button x " + button2.getX());
+                System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
+                System.out.println("XX  Button gl-ps " + (gridLayout.getRight() - pairSymbol.getX()));
+
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - button2.getWidth() - gridLayout.getX());
-                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y",  - getViewCoords(button2, "y") - gridLayout.getY());
-                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.1f);
-                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.1f);
-                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
+                        //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
+                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
+                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() /2));
+                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.24f);
+                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.24f);
+                        PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
+                        //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
+                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
                         animator3.setInterpolator(new AccelerateDecelerateInterpolator());
                         animator3.setDuration(zoomOutDuration);
                         animator3.start();
@@ -405,6 +415,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onAnimationEnd(Animator animator3) {
+                                System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
+                                System.out.println("XX  Button x " + button2.getX());
+                                System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
                                 button2.setVisibility(View.INVISIBLE);
                                 addScore();
                                 isBusy = false;
@@ -474,7 +487,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     protected void showEndScore(String endMessage) {
-
+        isBusy = true;
         Fragment endScore = new EndScoreDialog();
 
         FragmentTransaction ft;
@@ -544,6 +557,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                     //if (numberMatched == numberOfElements / 2) {
                     if (numberMatched == 1) { // test mode
+                        isBusy = true;
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");
