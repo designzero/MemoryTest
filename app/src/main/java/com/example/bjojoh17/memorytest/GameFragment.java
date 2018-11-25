@@ -384,7 +384,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             public void onAnimationEnd(Animator animator) {
                 System.out.println("XX  Button dw " + metrics.widthPixels);
                 System.out.println("XX  Button glx " + gridLayout.getX());
-                System.out.println("XX  Button gfx " + getViewCoords(gameFragmentContainer, "x"));
+                System.out.println("XX  Button glsfx " + getViewCoords(gridLayout, "x"));
                 System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
                 System.out.println("XX  Button x " + button2.getX());
                 System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
@@ -395,14 +395,14 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void run() {
 
-                        //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
-                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
+                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
+                        //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
                         PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() /2));
-                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.24f);
-                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.24f);
-                        PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
-                        //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
-                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
+                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.48f / metrics.density);
+                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.48f / metrics.density);
+                        //PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
+                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
+                        //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
                         animator3.setInterpolator(new AccelerateDecelerateInterpolator());
                         animator3.setDuration(zoomOutDuration);
                         animator3.start();
