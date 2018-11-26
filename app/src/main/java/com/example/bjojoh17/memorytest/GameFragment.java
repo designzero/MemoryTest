@@ -64,6 +64,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private TextView pl1ScoreText;
     private TextView pl2ScoreText;
+    private TextView pl1Name;
+    private TextView pl2Name;
     private int pl1Score = 0;
     private int pl2Score = 0;
     private int turn = 0;
@@ -137,6 +139,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         if (duo) {
             pl2Score = 0;
             pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
+            pl1Name = getActivity().findViewById(R.id.pl1_name);
+            pl2Name = getActivity().findViewById(R.id.pl2_name);
             pl1ScoreText.setText("0/" + numberOfElements/2);
             pl2ScoreText.setText("0/" + numberOfElements/2);
             turn = 2;
@@ -289,17 +293,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void switchSides() {
         if (turn == 2) {
-            pl1ScoreText.setTextColor(getResources().getColor(R.color.button_blue));
-            pl1ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
-            pl2ScoreText.setTypeface(Typeface.DEFAULT);
-            pl2ScoreText.setTextColor(Color.WHITE);
+            pl1Name.setTextColor(getResources().getColor(R.color.button_blue));
+            pl1Name.setTypeface(Typeface.DEFAULT_BOLD);
+            pl2Name.setTypeface(Typeface.DEFAULT);
+            pl2Name.setTextColor(Color.WHITE);
             turn = 1;
         }
         else if (turn == 1) {
-            pl1ScoreText.setTextColor(Color.WHITE);
-            pl1ScoreText.setTypeface(Typeface.DEFAULT);
-            pl1ScoreText.setTextColor(getResources().getColor(R.color.button_blue));
-            pl2ScoreText.setTypeface(Typeface.DEFAULT_BOLD);
+            pl1Name.setTextColor(Color.WHITE);
+            pl1Name.setTypeface(Typeface.DEFAULT);
+            pl2Name.setTextColor(getResources().getColor(R.color.button_blue));
+            pl2Name.setTypeface(Typeface.DEFAULT_BOLD);
             turn = 2;
         }
     }
