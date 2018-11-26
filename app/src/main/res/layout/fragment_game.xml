@@ -19,7 +19,7 @@
 
         <Button
             android:id="@+id/button_back"
-            android:layout_width="139dp"
+            android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:background="@drawable/back_arrow"
             android:textAllCaps="false"

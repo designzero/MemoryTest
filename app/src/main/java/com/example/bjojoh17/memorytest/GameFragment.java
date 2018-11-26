@@ -137,6 +137,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         if (duo) {
             pl2Score = 0;
             pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
+            pl1ScoreText.setText("0/" + numberOfElements/2);
+            pl2ScoreText.setText("0/" + numberOfElements/2);
             turn = 2;
             switchSides();
         }
@@ -496,17 +498,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void addScore() {
         if (turn == 0) {
-            pl1ScoreText.setText("" + numberMatched + "/" + numberOfElements/2);
+            pl1ScoreText.setText(numberMatched + "/" + numberOfElements/2);
         }
 
         if (turn == 1) {
             pl1Score++;
-            pl1ScoreText.setText("Spelare 1:  " + pl1Score);
+            pl1ScoreText.setText(pl1Score + "/" + numberOfElements/2);
         }
 
         if (turn == 2) {
             pl2Score++;
-            pl2ScoreText.setText("Spelare 2:  " + pl2Score);
+            pl2ScoreText.setText(pl2Score + "/" + numberOfElements/2);
         }
     }
 
