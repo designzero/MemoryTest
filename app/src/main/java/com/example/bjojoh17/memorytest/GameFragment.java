@@ -117,12 +117,22 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     public void initGame() {
 
+
+        buttonContainer = getActivity().findViewById(R.id.button_container);
+        gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
+        gridLayout = getActivity().findViewById(R.id.grid_layout);
+
+        GridLayout gridLayout = getActivity().findViewById(R.id.grid_layout);
+        gridLayout.setRowCount(gameRows);
+        gridLayout.setColumnCount(gameColumns);
+
+        numberOfElements = gameColumns * gameRows;
+
         numberMatched = 0;
 
         pl1Score = 0;
 
         pl1ScoreText = getActivity().findViewById(R.id.pl1_score);
-
 
         if (duo) {
             pl2Score = 0;
@@ -134,16 +144,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         else {
             turn = 0;
             //pl1ScoreText.setVisibility(View.INVISIBLE);
-            pl1ScoreText.setText("0");
+            pl1ScoreText.setText("0/" + numberOfElements/2);
         }
-
-        buttonContainer = getActivity().findViewById(R.id.button_container);
-        gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
-        gridLayout = getActivity().findViewById(R.id.grid_layout);
-
-        GridLayout gridLayout = getActivity().findViewById(R.id.grid_layout);
-        gridLayout.setRowCount(gameRows);
-        gridLayout.setColumnCount(gameColumns);
 
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -159,10 +161,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        int numColumns = gridLayout.getColumnCount();
-        int numRows = gridLayout.getRowCount();
-
-        numberOfElements = numColumns * numRows;
 
         buttons = new MemoryButton[numberOfElements];
 
@@ -236,9 +234,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         //shuffleButtonGraphics();
 
-        for(int r = 0; r < numRows; r++){
-            for(int c = 0; c < numColumns; c++){
-                MemoryButton tempButton = new MemoryButton(getContext(), r, c, buttonGraphics[buttonGraphicIndexes[r * numColumns + c]]);
+        for(int r = 0; r < gameRows; r++){
+            for(int c = 0; c < gameColumns; c++){
+                MemoryButton tempButton = new MemoryButton(getContext(), r, c, buttonGraphics[buttonGraphicIndexes[r * gameColumns + c]]);
                 tempButton.setId(View.generateViewId());
                 tempButton.setOnClickListener(this);
                 tempButton.setSoundEffectsEnabled(false);
@@ -248,7 +246,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 //tempButton.setRotation(buttonRotation);
                 //slut
 
-                buttons[r * numColumns + c] = tempButton;
+                buttons[r * gameColumns + c] = tempButton;
                 gridLayout.addView(tempButton);
             }
         }
@@ -395,44 +393,90 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void run() {
 
-                        PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
-                        //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
-                        PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() /2));
-                        PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.48f / metrics.density);
-                        PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.48f / metrics.density);
-                        //PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
-                        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
-                        //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
-                        animator3.setInterpolator(new AccelerateDecelerateInterpolator());
-                        animator3.setDuration(zoomOutDuration);
-                        animator3.start();
+                        if (metrics.widthPixels == 2560 && metrics.heightPixels == 1800) {
+                            PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
+                            //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
+                            PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() / 2));
+                            PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.48f / metrics.density);
+                            PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.48f / metrics.density);
+                            PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
+                            //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
+                            ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
 
-                        animator3.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animator3) {
+                            animator3.setInterpolator(new AccelerateDecelerateInterpolator());
+                            animator3.setDuration(zoomOutDuration);
+                            animator3.start();
 
-                            }
+                            animator3.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animator3) {
 
-                            @Override
-                            public void onAnimationEnd(Animator animator3) {
-                                System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
-                                System.out.println("XX  Button x " + button2.getX());
-                                System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
-                                button2.setVisibility(View.INVISIBLE);
-                                addScore();
-                                isBusy = false;
-                            }
+                                }
 
-                            @Override
-                            public void onAnimationCancel(Animator animator3) {
+                                @Override
+                                public void onAnimationEnd(Animator animator3) {
 
-                            }
+                                    System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
+                                    System.out.println("XX  Button x " + button2.getX());
+                                    System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
+                                    button2.setVisibility(View.INVISIBLE);
+                                    addScore();
+                                    isBusy = false;
+                                }
 
-                            @Override
-                            public void onAnimationRepeat(Animator animator3) {
+                                @Override
+                                public void onAnimationCancel(Animator animator3) {
 
-                            }
-                        });
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animator3) {
+
+                                }
+                            });
+                        }
+                        else  {
+                            PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX());
+                            //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
+                            PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() / 2));
+                            PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.30f / metrics.density);
+                            PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.30f / metrics.density);
+                            PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
+                            //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
+                            ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
+
+                            animator3.setInterpolator(new AccelerateDecelerateInterpolator());
+                            animator3.setDuration(zoomOutDuration);
+                            animator3.start();
+
+                            animator3.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animator3) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animator3) {
+                                    System.out.println("XX  Button dpi " + metrics.density);
+                                    System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
+                                    System.out.println("XX  Button x " + button2.getX());
+                                    System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
+                                    button2.setVisibility(View.INVISIBLE);
+                                    addScore();
+                                    isBusy = false;
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animator3) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animator3) {
+
+                                }
+                            });
+                        }
                     }
                 }, showZoomedDuration);
             }
@@ -452,7 +496,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void addScore() {
         if (turn == 0) {
-            pl1ScoreText.setText("" + numberMatched);
+            pl1ScoreText.setText("" + numberMatched + "/" + numberOfElements/2);
         }
 
         if (turn == 1) {
