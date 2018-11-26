@@ -48,7 +48,7 @@ public class MemoryButton extends android.support.v7.widget.AppCompatImageButton
             bm = Math.round(buttonMetrics / (GameFragment.getGameRows() + (metrics.density * 3)));
         }
         if (GameFragment.getGameRows() == 4) {
-            bm = Math.round(buttonMetrics / (GameFragment.getGameRows() + (metrics.density * 6)));
+            bm = Math.round(buttonMetrics / (GameFragment.getGameRows() + (metrics.density * 7)));
         }
         tempParams.setMargins(bm,bm,bm,bm);
 

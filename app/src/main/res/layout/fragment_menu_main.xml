@@ -9,21 +9,40 @@
     android:orientation="vertical"
     tools:context=".MenuFragment">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="vertical">
+        android:layout_height="100dp">
 
         <Button
             android:id="@+id/button_back2"
-            android:layout_width="173dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/back_arrow"
             android:textAllCaps="false"
-            android:textSize="30sp" />
-    </LinearLayout>
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/title_memory"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,39 +50,60 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-100dp"
-            android:layout_marginBottom="50dp"
-            android:alpha="0.8"
-            android:padding="10dp"
-            android:text="@string/title_memory"
-            android:textColor="@android:color/background_light"
-            android:textSize="75sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="600dp"
+            android:layout_height="500dp"
+            android:background="@drawable/white_border_radius">
 
-        <Button
-            android:id="@+id/button_solo"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:padding="20dp"
-            android:text="@string/menu_option_solo_game"
-            android:textAllCaps="false"
-            android:textSize="36sp" />
+            <Button
+                android:id="@+id/button_duo"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="64dp"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/white_border_radius"
+                android:padding="20dp"
+                android:text="2"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:id="@+id/button_duo"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="@string/menu_option_duo_game"
-            android:textAllCaps="false"
-            android:textSize="36sp" />
+            <Button
+                android:id="@+id/button_solo"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="64dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="48dp"
+                android:background="@drawable/white_border_radius"
+                android:padding="20dp"
+                android:text="1"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_duo"
+                app:layout_constraintHorizontal_bias="0.105"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Hur många ska spela?"
+                android:textColor="@android:color/white"
+                android:textSize="48sp"
+                app:layout_constraintBottom_toTopOf="@+id/button_solo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

@@ -9,7 +9,7 @@
     android:tag="endScoreDialog">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/ContrainLayout"
         android:layout_width="715dp"
         android:layout_height="517dp"
         android:background="@drawable/bg_end"

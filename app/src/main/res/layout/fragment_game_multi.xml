@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/game_titlebar"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="100dp"
         android:background="@color/title_bar"
         android:clipChildren="false"
         android:orientation="horizontal">
@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:layout_marginEnd="380dp"
+            android:layout_marginEnd="350dp"
             android:layout_marginTop="8dp"
             android:shadowColor="@android:color/white"
             android:shadowDx="3"
@@ -54,8 +54,9 @@
 
         <Button
             android:id="@+id/button_back"
-            android:layout_width="173dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:background="@drawable/back_arrow"
             android:textAllCaps="false"
             android:textSize="30sp"
@@ -103,6 +104,7 @@
             android:id="@+id/pl1_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
@@ -110,6 +112,7 @@
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
             android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/image_pair"
             app:layout_constraintStart_toEndOf="@+id/button_back"
             app:layout_constraintTop_toTopOf="parent" />
@@ -118,6 +121,7 @@
             android:id="@+id/pl2_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
@@ -125,6 +129,7 @@
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
             android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/image_pair4"
             app:layout_constraintStart_toEndOf="@+id/pl1_score"
             app:layout_constraintTop_toTopOf="parent" />
