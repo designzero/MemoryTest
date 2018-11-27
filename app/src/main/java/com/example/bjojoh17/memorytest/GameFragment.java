@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.icu.text.SymbolTable;
 import android.os.Environment;
 import android.os.Handler;
@@ -29,6 +30,8 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -170,6 +173,58 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttons = new MemoryButton[numberOfElements];
 
+
+        //-------------------------------
+
+       // array of supported extensions (use a List if you prefer)
+        final String[] EXTENSIONS = new String[]{
+                "gif", "png", "bmp" // and other formats you need
+        };
+        // filter to identify images based on their extensions
+        final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+            @Override
+            public boolean accept(final File dir, final String name) {
+                for (final String ext : EXTENSIONS) {
+                    if (name.endsWith("." + ext)) {
+                        return (true);
+                    }
+                }
+                return (false);
+            }
+        };
+
+
+
+       /* File dir = new File(Environment.getExternalStorageDirectory().getPath());
+        File[] filelist;
+
+        ImageView image;
+        image = new ImageView(getActivity().getApplicationContext());
+        filelist = dir.listFiles(IMAGE_FILTER);
+        System.out.println("XX " + filelist[0].getName());*/
+
+        /*if (dir.isDirectory()) {
+           filelist = dir.listFiles(IMAGE_FILTER);
+
+            for (File f : filelist) {
+                // do your stuff here
+
+                //Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
+                //Drawable d = new BitmapDrawable(getResources(), myBitmap);
+                //ImageView myImage = (ImageView) getActivity().findViewById(R.id.imageviewTest);
+                //myImage.setImageBitmap(myBitmap);
+
+
+                Picasso.get().load(f).into(image);
+                Drawable imageTest = image.getDrawable();
+
+
+            }
+        }*/
+
+        //-------------------------------
+
         buttonGraphics = new int[numberOfElements / 2];
 
         /*buttonGraphics[0] = R.drawable.button_1;
@@ -208,37 +263,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             buttonGraphics[7] = R.drawable.button_16;
         }
 
-       /* // array of supported extensions (use a List if you prefer)
-        final String[] EXTENSIONS = new String[]{
-                "gif", "png", "bmp" // and other formats you need
-        };
-        // filter to identify images based on their extensions
-        final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
 
-            @Override
-            public boolean accept(final File dir, final String name) {
-                for (final String ext : EXTENSIONS) {
-                    if (name.endsWith("." + ext)) {
-                        return (true);
-                    }
-                }
-                return (false);
-            }
-        };
-
-        File dir = new File("/sdcard/DCIM");
-        File[] filelist = dir.listFiles(IMAGE_FILTER );
-        for (File f : filelist) {
-            // do your stuff here
-
-
-        }*/
 
 
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        //shuffleButtonGraphics();
+        shuffleButtonGraphics();
 
         for(int r = 0; r < gameRows; r++){
             for(int c = 0; c < gameColumns; c++){
@@ -546,6 +577,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         ft.addToBackStack(null);
         ft.commit();
         ((EndScoreDialog) endScore).setMessage(endMessage);
+        ((MainActivity)getActivity()).winSound.start();
     }
 
     @Override
@@ -572,7 +604,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         if(selectedButton1.getFrontDrawableId() == button.getFrontDrawableId()) {
             isBusy = true;
-            ((MainActivity)getActivity()).flipSound.start();
+            ((MainActivity)getActivity()).matchedSound.start();
+            //((MainActivity)getActivity()).flipSound.start();
             button.flip();
             vibrator.vibrate(vibrateLong);
 
@@ -605,8 +638,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                     //showEndScore("Bra jobbat!");  //Test
 
-                    //if (numberMatched == numberOfElements / 2) {
-                    if (numberMatched == 1) { // test mode
+                    if (numberMatched == numberOfElements / 2) {
+                    //if (numberMatched == 1) { // test mode
                         isBusy = true;
                         if (duo) {
                             if (pl1Score > pl2Score) {

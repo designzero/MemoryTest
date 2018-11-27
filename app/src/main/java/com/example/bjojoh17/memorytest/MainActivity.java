@@ -1,8 +1,12 @@
 package com.example.bjojoh17.memorytest;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private Fragment gameFragment;
 
     public MediaPlayer flipSound;
+    public MediaPlayer matchedSound;
+    public MediaPlayer winSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         gameFragment = new GameFragment();
 
         flipSound = MediaPlayer.create(this, R.raw.flip2);
+        flipSound.setVolume(0.25f,0.25f);
+        matchedSound = MediaPlayer.create(this, R.raw.par1);
+        winSound = MediaPlayer.create(this, R.raw.winning);
+        winSound.setVolume(0.75f,0.75f);
 
         gotoMenu();
     }

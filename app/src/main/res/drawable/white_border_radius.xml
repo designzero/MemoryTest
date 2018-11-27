@@ -43,5 +43,5 @@
                 android:width="5dp"
                 android:color="@android:color/white" />
         </shape>
-        </item>
-    </layer-list>
+    </item>
+</layer-list>
