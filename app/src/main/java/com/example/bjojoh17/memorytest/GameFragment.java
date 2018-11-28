@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.widget.ImageViewCompat;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private int numberOfElements;
 
     private MemoryButton[] buttons;
+    public MemoryButton animatedButton;
+    public MemoryButton animatedButton2;
 
     private int[] buttonGraphicIndexes;
     private int[] buttonGraphics;
@@ -91,17 +94,29 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private static boolean isBusy = false;
 
+    public static boolean getIsZooming() {
+        return isZooming;
+    }
+
+    public static void setIsZooming(boolean isZooming) {
+        GameFragment.isZooming = isZooming;
+    }
+
+    private static boolean isZooming = false;
+
     public static void setBusy(boolean busy) {
         isBusy = busy;
     }
+
+    public static boolean skipped = false;
 
     Vibrator vibrator;
     private int vibrateShort = 100;
     private int vibrateLong = 500;
 
-    LinearLayout buttonContainer;
-    FrameLayout gameFragmentContainer;
-    GridLayout gridLayout;
+    public LinearLayout buttonContainer;
+    public FrameLayout gameFragmentContainer;
+    public GridLayout gridLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -121,10 +136,12 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initGame() {
+        selectedButton1 = null;
 
+        gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
 
         buttonContainer = getActivity().findViewById(R.id.button_container);
-        gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
+
         gridLayout = getActivity().findViewById(R.id.grid_layout);
 
         GridLayout gridLayout = getActivity().findViewById(R.id.grid_layout);
@@ -269,7 +286,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        shuffleButtonGraphics();
+        //shuffleButtonGraphics();
 
         for(int r = 0; r < gameRows; r++){
             for(int c = 0; c < gameColumns; c++){
@@ -356,25 +373,30 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     protected void animateMatched(final MemoryButton button2) {
+
         isBusy = true;
+        setIsZooming(true);
+
         final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
 
         final MemoryButton button1 = selectedButton1;
 
-        final ImageView pairSymbol;
-        pairSymbol = getActivity().findViewById(R.id.image_pair);
+        animatedButton = button2;
+        animatedButton2 = button1;
 
         button1.bringToFront();
+
 
         PropertyValuesHolder pvhX2 = PropertyValuesHolder.ofFloat("translationX", metrics.widthPixels / 2 - getViewCoords(button1, "x") - button1.getWidth() / 2);
         PropertyValuesHolder pvhY2 = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 + gameFragmentContainer.getY() - getViewCoords(button1, "y") - button1.getHeight() / 2);
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 3.7f);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 3.7f);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
-        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
+        final ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
         animator2.setDuration(zoomInDuration);
         animator2.start();
+
 
         animator2.addListener(new Animator.AnimatorListener() {
             @Override
@@ -389,7 +411,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onAnimationCancel(Animator animator2) {
-
+                button1.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -404,10 +426,24 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 + gameFragmentContainer.getY() - getViewCoords(button2, "y") - button2.getHeight() / 2);
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
-        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
+        final ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(zoomInDuration);
         animator.start();
+
+        gameFragmentContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBusy && isZooming) {
+                    animator.cancel();
+                    animator2.cancel();
+                    addScore();
+                    isBusy = false;
+                    setIsZooming(false);
+                    skipped = true;
+                }
+            }
+        });
 
         animator.addListener(new Animator.AnimatorListener() {
             @Override
@@ -417,18 +453,35 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                System.out.println("XX  Button dw " + metrics.widthPixels);
+                /*System.out.println("XX  Button dw " + metrics.widthPixels);
                 System.out.println("XX  Button glx " + gridLayout.getX());
                 System.out.println("XX  Button glsfx " + getViewCoords(gridLayout, "x"));
                 System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
                 System.out.println("XX  Button x " + button2.getX());
                 System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
-                System.out.println("XX  Button gl-ps " + (gridLayout.getRight() - pairSymbol.getX()));
+                System.out.println("XX  Button gl-ps " + (gridLayout.getRight() - pairSymbol.getX()));*/
 
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                if (!skipped) {
+
+                    final Handler handler = new Handler();
+
+                    gameFragmentContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (isBusy && isZooming) {
+                                handler.removeCallbacksAndMessages(null);
+                                button2.setVisibility(View.INVISIBLE);
+                                addScore();
+                                isBusy = false;
+                                setIsZooming(false);
+                                skipped = true;
+                            }
+                        }
+                    });
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
                             PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX() - 20);
                             //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
@@ -437,11 +490,21 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                             PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.30f / metrics.density);
                             PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
                             //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
-                            ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
-
+                            final ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
                             animator3.setInterpolator(new AccelerateDecelerateInterpolator());
                             animator3.setDuration(zoomOutDuration);
                             animator3.start();
+
+                            gameFragmentContainer.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (isBusy && isZooming) {
+                                        handler.removeCallbacksAndMessages(null);
+                                        animator3.cancel();
+                                        skipped = true;
+                                    }
+                                }
+                            });
 
                             animator3.addListener(new Animator.AnimatorListener() {
                                 @Override
@@ -451,17 +514,22 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
                                 @Override
                                 public void onAnimationEnd(Animator animator3) {
-                                    System.out.println("XX  Button dpi " + metrics.density);
+                                    /*System.out.println("XX  Button dpi " + metrics.density);
                                     System.out.println("XX  Button w " + button2.getWidth() * button2.getScaleX());
                                     System.out.println("XX  Button x " + button2.getX());
-                                    System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
+                                    System.out.println("XX  Button sx " + getViewCoords(button2, "x"));*/
                                     button2.setVisibility(View.INVISIBLE);
                                     addScore();
                                     isBusy = false;
+                                    setIsZooming(false);
                                 }
 
                                 @Override
                                 public void onAnimationCancel(Animator animator3) {
+                                    button2.setVisibility(View.INVISIBLE);
+                                    addScore();
+                                    isBusy = false;
+                                    setIsZooming(false);
 
                                 }
 
@@ -471,13 +539,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                                 }
                             });
 
-                    }
-                }, showZoomedDuration);
+                        }
+                    }, showZoomedDuration);
+                }
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
-
+                button2.setVisibility(View.INVISIBLE);
+                addScore();
+                isBusy = false;
+                setIsZooming(false);
             }
 
             @Override
@@ -485,6 +557,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+
     }
 
 
@@ -537,8 +610,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         ((MainActivity)getActivity()).winSound.start();
     }
 
+
     @Override
     public void onClick(View view) {
+
         if(isBusy)
             return;
 
@@ -587,6 +662,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         isBusy = false;
                     }
                     else {
+                        skipped = false;
+                        animatedButton = button;
+                        animatedButton2 = selectedButton1;
                         animateMatched(button);
                     }
 
@@ -598,6 +676,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     if (numberMatched == numberOfElements / 2) {
                     //if (numberMatched == 1) { // test mode
                         isBusy = true;
+                        System.out.println("XX " + skipped);
                         if (duo) {
                             if (pl1Score > pl2Score) {
                                 showEndScore("Spelare 1 vann!");
@@ -610,7 +689,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                             }
 
                         }
-                        else {
+
+                        else if (skipped){
+                            showEndScore("Bra jobbat!");
+                            skipped = false;
+                        }
+
+                        else if (!skipped){
                             final Handler handler = new Handler();
 
                             handler.postDelayed(new Runnable() {
