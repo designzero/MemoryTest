@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         flipSound.setVolume(0.25f,0.25f);
         matchedSound = MediaPlayer.create(this, R.raw.par1);
         winSound = MediaPlayer.create(this, R.raw.winning);
-        winSound.setVolume(0.75f,0.75f);
+        winSound.setVolume(0.50f,0.50f);
 
         gotoMenu();
     }
