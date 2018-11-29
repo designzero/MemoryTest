@@ -1,5 +1,6 @@
 package com.example.bjojoh17.memorytest;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class MenuFragment extends Fragment {
         buttonSolo = getActivity().findViewById(R.id.button_solo);
         buttonDuo = getActivity().findViewById(R.id.button_duo);
 
+        final Handler handler = new Handler();
+
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,8 +42,15 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GameFragment.setDuo(false);
+                buttonSolo.setTranslationX(4);
+                buttonSolo.setTranslationY(4);
                 ((MainActivity)getActivity()).clickSound.start();
-                ((MainActivity)getActivity()).gotoDiffMenu();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoDiffMenu();
+                    }
+                }, 200);
             }
         });
 
@@ -48,8 +58,16 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GameFragment.setDuo(true);
+                buttonDuo.setTranslationX(4);
+                buttonDuo.setTranslationY(4);
                 ((MainActivity)getActivity()).clickSound.start();
-                ((MainActivity)getActivity()).gotoDiffMenu();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoDiffMenu();
+                    }
+                }, 200);
             }
         });
     }

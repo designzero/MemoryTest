@@ -30,6 +30,9 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Random;
@@ -92,10 +95,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private static boolean isBusy = false;
 
-    public static boolean getIsZooming() {
-        return isZooming;
-    }
-
     public static void setIsZooming(boolean isZooming) {
         GameFragment.isZooming = isZooming;
     }
@@ -108,6 +107,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     public static boolean skipped = false;
 
+    private static boolean loading = false;
+
     Vibrator vibrator;
     private int vibrateShort = 100;
     private int vibrateLong = 500;
@@ -115,6 +116,12 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     public LinearLayout buttonContainer;
     public FrameLayout gameFragmentContainer;
     public GridLayout gridLayout;
+
+    public ObjectAnimator animator;
+    public ObjectAnimator animator2;
+    public ObjectAnimator animator3;
+
+    final Handler animHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -134,7 +141,14 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initGame() {
+        isBusy = true;
+
         selectedButton1 = null;
+
+        numberMatched = 0;
+
+        pl1Score = 0;
+        pl2Score = 0;
 
         gameFragmentContainer = getActivity().findViewById(R.id.game_fragment_container);
 
@@ -148,14 +162,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         numberOfElements = gameColumns * gameRows;
 
-        numberMatched = 0;
-
-        pl1Score = 0;
-
         pl1ScoreText = getActivity().findViewById(R.id.pl1_score);
 
         if (duo) {
-            pl2Score = 0;
             pl2ScoreText = getActivity().findViewById(R.id.pl2_score);
             pl1Name = getActivity().findViewById(R.id.pl1_name);
             pl2Name = getActivity().findViewById(R.id.pl2_name);
@@ -181,10 +190,15 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isBusy) {
-                    ((MainActivity)getActivity()).clickSound.start();
-                    ((MainActivity) getActivity()).gotoMenu();
-                }
+                ((MainActivity)getActivity()).clickSound.start();
+                if(animator != null)
+                    animator.cancel();
+                if(animator2 != null)
+                    animator2.cancel();
+                if(animator3 != null)
+                    animator3.cancel();
+                animHandler.removeCallbacksAndMessages(null);
+                ((MainActivity)getActivity()).gotoMenu();
             }
         });
 
@@ -287,6 +301,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 tempButton.setOnClickListener(this);
                 tempButton.setSoundEffectsEnabled(false);
 
+
                 //Vrid brickorna - start
                 //int buttonRotation = new Random().nextInt(10) - 5;
                 //tempButton.setRotation(buttonRotation);
@@ -297,6 +312,18 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             }
         }
         ((MainActivity)getActivity()).startSound.start();
+        YoYo.with(Techniques.BounceInUp)
+                .duration(900)
+                .repeat(0)
+                .playOn(gridLayout);
+        final Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isBusy = false;
+            }
+        },750);
     }
 
     protected void loadImages() {
@@ -390,7 +417,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         PropertyValuesHolder pvhSX2 = PropertyValuesHolder.ofFloat("scaleX", 3.7f);
         PropertyValuesHolder pvhSY2 = PropertyValuesHolder.ofFloat("scaleY", 3.7f);
         //PropertyValuesHolder pvhA2 = PropertyValuesHolder.ofFloat("alpha", 0.5f);
-        final ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
+        animator2 = ObjectAnimator.ofPropertyValuesHolder(button1, pvhX2, pvhY2, pvhSX2, pvhSY2);
         animator2.setInterpolator(new DecelerateInterpolator());
         animator2.setDuration(zoomInDuration);
         animator2.start();
@@ -423,7 +450,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("translationY",  gameFragmentContainer.getHeight() / 2 + gameFragmentContainer.getY() - getViewCoords(button2, "y") - button2.getHeight() / 2);
         PropertyValuesHolder pvhSX = PropertyValuesHolder.ofFloat("scaleX", 4);
         PropertyValuesHolder pvhSY = PropertyValuesHolder.ofFloat("scaleY", 4);
-        final ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
+        animator = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX, pvhY, pvhSX, pvhSY);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(zoomInDuration);
         animator.start();
@@ -456,15 +483,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 System.out.println("XX  Button sx " + getViewCoords(button2, "x"));
                 System.out.println("XX  Button gl-ps " + (gridLayout.getRight() - pairSymbol.getX()));*/
 
-                final Handler handler = new Handler();
-
                     gameFragmentContainer.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (isBusy && isZooming) {
-                                handler.removeCallbacksAndMessages(null);
+                                animHandler.removeCallbacksAndMessages(null);
                                 button2.setVisibility(View.INVISIBLE);
                                 addScore();
+                                YoYo.with(Techniques.RubberBand)
+                                        .duration(500)
+                                        .repeat(0)
+                                        .playOn(pl1ScoreText);
                                 isBusy = false;
                                 setIsZooming(false);
                                 skipped = true;
@@ -473,18 +502,18 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         }
                     });
 
-                    handler.postDelayed(new Runnable() {
+                    animHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
 
                             PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX() - 20);
                             //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
                             PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() / 2));
-                            PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.30f / metrics.density);
-                            PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.30f / metrics.density);
+                            PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.32f / metrics.density);
+                            PropertyValuesHolder pvhSY3 = PropertyValuesHolder.ofFloat("scaleY", 0.32f / metrics.density);
                             PropertyValuesHolder pvhR3 = PropertyValuesHolder.ofFloat("rotation", 75f);
                             //ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3);
-                            final ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
+                            animator3 = ObjectAnimator.ofPropertyValuesHolder(button2, pvhX3, pvhY3, pvhSX3, pvhSY3, pvhR3);
                             animator3.setInterpolator(new AccelerateDecelerateInterpolator());
                             animator3.setDuration(zoomOutDuration);
                             animator3.start();
@@ -509,6 +538,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                                 public void onAnimationEnd(Animator animator3) {
                                     button2.setVisibility(View.INVISIBLE);
                                     addScore();
+                                    YoYo.with(Techniques.RubberBand)
+                                            .duration(500)
+                                            .repeat(0)
+                                            .playOn(pl1ScoreText);
                                     isBusy = false;
                                     setIsZooming(false);
                                 }
@@ -532,10 +565,14 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             public void onAnimationCancel(Animator animator) {
                 animator.removeAllListeners();
                 button2.setVisibility(View.INVISIBLE);
+                addScore();
+                YoYo.with(Techniques.RubberBand)
+                        .duration(500)
+                        .repeat(0)
+                        .playOn(pl1ScoreText);
                 isBusy = false;
                 setIsZooming(false);
                 skipped = true;
-                addScore();
             }
 
             @Override
@@ -555,11 +592,19 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         if (turn == 1) {
             pl1Score++;
             pl1ScoreText.setText(pl1Score + "/" + numberOfElements/2);
+            YoYo.with(Techniques.RubberBand)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(pl1ScoreText);
         }
 
         if (turn == 2) {
             pl2Score++;
             pl2ScoreText.setText(pl2Score + "/" + numberOfElements/2);
+            YoYo.with(Techniques.RubberBand)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(pl2ScoreText);
         }
     }
 
@@ -605,8 +650,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             System.out.println("XX view ");
         }
 
-        else if(isBusy)
+        else if(isBusy) {
+            System.out.println("XX I'm busy mom!");
             return;
+        }
 
         final MemoryButton button = (MemoryButton) view;
 
@@ -649,8 +696,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     if (duo) {
                         selectedButton1.setVisibility(View.INVISIBLE);
                         button.setVisibility(View.INVISIBLE);
-                        addScore();
                         isBusy = false;
+                        addScore();
                     }
                     else {
                         skipped = false;

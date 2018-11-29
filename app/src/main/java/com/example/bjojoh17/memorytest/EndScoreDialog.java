@@ -14,6 +14,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 public class EndScoreDialog extends Fragment {
 
     public Button buttonQuit;
@@ -30,6 +33,11 @@ public class EndScoreDialog extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        YoYo.with(Techniques.BounceInUp)
+                .duration(1500)
+                .repeat(0)
+                .playOn(view);
 
         buttonQuit = getActivity().findViewById(R.id.button_quit);
         buttonPlayAgain = getActivity().findViewById(R.id.button_play_again);

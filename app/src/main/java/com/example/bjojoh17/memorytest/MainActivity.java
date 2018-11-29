@@ -1,12 +1,8 @@
 package com.example.bjojoh17.memorytest;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +11,9 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentTransaction ft;
 
-    private Fragment menuFragment;
-    private Fragment menuFragmentDifficulty;
-    private Fragment gameFragment;
+    public Fragment menuFragment;
+    public Fragment menuFragmentDifficulty;
+    public Fragment gameFragment;
 
     public MediaPlayer clickSound;
     public MediaPlayer flipSound;
@@ -65,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public void gotoGame() {
         ft = getSupportFragmentManager().beginTransaction();
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+        //ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
         ft.replace(R.id.fragment_container, gameFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -103,3 +99,4 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 }
+

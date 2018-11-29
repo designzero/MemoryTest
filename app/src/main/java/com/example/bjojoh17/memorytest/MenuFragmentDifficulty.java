@@ -3,6 +3,7 @@ package com.example.bjojoh17.memorytest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonMedium = getActivity().findViewById(R.id.button_medium);
         buttonHard = getActivity().findViewById(R.id.button_hard);
 
+        final Handler handler = new Handler();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,14 @@ public class MenuFragmentDifficulty extends Fragment {
             public void onClick(View v) {
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,2);
-                ((MainActivity)getActivity()).gotoGame();
+                buttonEasy.setTranslationX(4);
+                buttonEasy.setTranslationY(4);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoGame();
+                    }
+                }, 200);
             }
         });
 
@@ -54,7 +63,14 @@ public class MenuFragmentDifficulty extends Fragment {
             public void onClick(View v) {
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,3);
-                ((MainActivity)getActivity()).gotoGame();
+                buttonMedium.setTranslationX(4);
+                buttonMedium.setTranslationY(4);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoGame();
+                    }
+                }, 200);
             }
         });
         buttonHard.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +78,14 @@ public class MenuFragmentDifficulty extends Fragment {
             public void onClick(View v) {
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,4);
-                ((MainActivity)getActivity()).gotoGame();
+                buttonHard.setTranslationX(4);
+                buttonHard.setTranslationY(4);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoGame();
+                    }
+                }, 200);
             }
         });
     }
