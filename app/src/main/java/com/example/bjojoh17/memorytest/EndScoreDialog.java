@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -45,10 +46,20 @@ public class EndScoreDialog extends Fragment {
         endText = getActivity().findViewById(R.id.text_game_end);
         endText.setText(endMessage);
 
+        final Handler handler = new Handler();
+
         buttonQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).gotoMenu();
+                buttonQuit.setTranslationX(4);
+                buttonQuit.setTranslationY(4);
+                ((MainActivity)getActivity()).clickSound.start();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoMenu();
+                    }
+                }, 200);
             }
         });
 
@@ -56,14 +67,22 @@ public class EndScoreDialog extends Fragment {
             @Override
             public void onClick(View v) {
                 GameFragment.setBusy(false);
-               // ((MainActivity)getActivity()).restartGame();
-                GameFragment fragment = (GameFragment)
-                        getFragmentManager().findFragmentById(R.id.fragment_container);
+                buttonPlayAgain.setTranslationX(4);
+                buttonPlayAgain.setTranslationY(4);
+                ((MainActivity)getActivity()).clickSound.start();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameFragment fragment = (GameFragment)
+                                getFragmentManager().findFragmentById(R.id.fragment_container);
 
-                getFragmentManager().beginTransaction()
-                        .detach(fragment)
-                        .attach(fragment)
-                        .commit();
+                        getFragmentManager().beginTransaction()
+                                .detach(fragment)
+                                .attach(fragment)
+                                .commit();
+                    }
+                }, 200);
+
             }
         });
 

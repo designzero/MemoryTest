@@ -38,7 +38,14 @@ public class MenuFragmentDifficulty extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).clickSound.start();
-                ((MainActivity)getActivity()).gotoMenu();
+                backButton.setTranslationX(4);
+                backButton.setTranslationY(4);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    ((MainActivity)getActivity()).gotoMenu();
+                    }
+                }, 200);
             }
         });
 

@@ -186,7 +186,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-        Button backButton = getActivity().findViewById(R.id.button_back);
+        final Button backButton = getActivity().findViewById(R.id.button_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +200,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     animator3.cancel();
                 animHandler.removeCallbacksAndMessages(null);
                 endHandler.removeCallbacksAndMessages(null);
-                ((MainActivity)getActivity()).gotoMenu();
+                backButton.setTranslationX(4);
+                backButton.setTranslationY(4);
+                ((MainActivity)getActivity()).clickSound.start();
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((MainActivity)getActivity()).gotoMenu();
+                    }
+                }, 200);
             }
         });
 
