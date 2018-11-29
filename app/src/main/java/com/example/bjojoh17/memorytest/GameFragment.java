@@ -540,10 +540,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             public void onAnimationCancel(Animator animator) {
                 animator.removeAllListeners();
                 button2.setVisibility(View.INVISIBLE);
-                addScore();
                 isBusy = false;
                 setIsZooming(false);
                 skipped = true;
+                addScore();
             }
 
             @Override
@@ -670,7 +670,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     selectedButton1 = null;
 
 
-                    //showEndScore("Bra jobbat!");  //Test
+                    System.out.println("XX Skipped");
 
                     if (numberMatched == numberOfElements / 2) {
                     //if (numberMatched == 1) { // test mode
