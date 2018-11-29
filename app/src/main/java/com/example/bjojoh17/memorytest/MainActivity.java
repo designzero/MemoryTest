@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public MediaPlayer clickSound;
     public MediaPlayer flipSound;
     public MediaPlayer matchedSound;
+    public MediaPlayer startSound;
     public MediaPlayer winSound;
 
     @Override
@@ -36,11 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         clickSound = MediaPlayer.create(this, R.raw.click_std);
         clickSound.setVolume(0.5f,0.5f);
-        flipSound = MediaPlayer.create(this, R.raw.flip2);
+        flipSound = MediaPlayer.create(this, R.raw.flip);
         flipSound.setVolume(0.3f,0.3f);
         matchedSound = MediaPlayer.create(this, R.raw.par1);
         winSound = MediaPlayer.create(this, R.raw.winning);
         winSound.setVolume(0.30f,0.30f);
+        startSound = MediaPlayer.create(this, R.raw.cardfan1);
+        startSound.setVolume(0.30f,0.30f);
 
         gotoMenu();
     }
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public void gotoGame() {
         ft = getSupportFragmentManager().beginTransaction();
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
         ft.replace(R.id.fragment_container, gameFragment);
         ft.addToBackStack(null);
         ft.commit();

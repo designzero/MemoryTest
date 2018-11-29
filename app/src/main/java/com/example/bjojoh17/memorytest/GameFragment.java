@@ -163,7 +163,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             pl2ScoreText.setText("0/" + numberOfElements/2);
             pl1Bg = getActivity().findViewById(R.id.pl1_bg);
             pl2Bg = getActivity().findViewById(R.id.pl2_bg);
-            turn = new Random().nextInt(2);
+            turn = new Random().nextInt(2) + 1;
+            System.out.println("XX " + turn);
             switchSides();
         }
 
@@ -244,15 +245,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttonGraphics = new int[numberOfElements / 2];
 
-        /*buttonGraphics[0] = R.drawable.button_1;
-        buttonGraphics[1] = R.drawable.button_2;
-        buttonGraphics[2] = R.drawable.button_3;
-        buttonGraphics[3] = R.drawable.button_4;
-        buttonGraphics[4] = R.drawable.button_5;
-        buttonGraphics[5] = R.drawable.button_6;*/
-        //buttonGraphics[6] = R.drawable.button_7;
-        //buttonGraphics[7] = R.drawable.button_8;
-
         if (gameColumns * gameRows == 8) {
             buttonGraphics[0] = R.drawable.button_11;
             buttonGraphics[1] = R.drawable.button_12;
@@ -304,7 +296,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 gridLayout.addView(tempButton);
             }
         }
-
+        ((MainActivity)getActivity()).startSound.start();
     }
 
     protected void loadImages() {
