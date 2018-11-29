@@ -14,6 +14,7 @@ import android.icu.text.SymbolTable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -63,6 +64,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private MemoryButton selectedButton1;
     private MemoryButton selectedButton2;
 
+    private ConstraintLayout pl1Bg;
+    private ConstraintLayout pl2Bg;
     private TextView pl1ScoreText;
     private TextView pl2ScoreText;
     private TextView pl1Name;
@@ -158,7 +161,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             pl2Name = getActivity().findViewById(R.id.pl2_name);
             pl1ScoreText.setText("0/" + numberOfElements/2);
             pl2ScoreText.setText("0/" + numberOfElements/2);
-            turn = 2;
+            pl1Bg = getActivity().findViewById(R.id.pl1_bg);
+            pl2Bg = getActivity().findViewById(R.id.pl2_bg);
+            turn = new Random().nextInt(2);
             switchSides();
         }
 
@@ -176,6 +181,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 if (!isBusy) {
+                    ((MainActivity)getActivity()).clickSound.start();
                     ((MainActivity) getActivity()).gotoMenu();
                 }
             }
@@ -280,7 +286,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        //shuffleButtonGraphics();
+        shuffleButtonGraphics();
 
         for(int r = 0; r < gameRows; r++){
             for(int c = 0; c < gameColumns; c++){
@@ -335,17 +341,21 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void switchSides() {
         if (turn == 2) {
-            pl1Name.setTextColor(getResources().getColor(R.color.button_blue));
-            pl1Name.setTypeface(Typeface.DEFAULT_BOLD);
-            pl2Name.setTypeface(Typeface.DEFAULT);
-            pl2Name.setTextColor(Color.WHITE);
+            //pl1Name.setTextColor(getResources().getColor(R.color.button_blue));
+            //pl1Name.setTypeface(Typeface.DEFAULT_BOLD);
+            //pl2Name.setTypeface(Typeface.DEFAULT);
+            //pl2Name.setTextColor(Color.WHITE);
+            pl1Bg.setBackground(getResources().getDrawable(R.drawable.player_bg_radius));
+            pl2Bg.setBackground(null);
             turn = 1;
         }
         else if (turn == 1) {
-            pl1Name.setTextColor(Color.WHITE);
-            pl1Name.setTypeface(Typeface.DEFAULT);
-            pl2Name.setTextColor(getResources().getColor(R.color.button_blue));
-            pl2Name.setTypeface(Typeface.DEFAULT_BOLD);
+            //pl1Name.setTextColor(Color.WHITE);
+            //pl1Name.setTypeface(Typeface.DEFAULT);
+            //pl2Name.setTextColor(getResources().getColor(R.color.button_blue));
+            //pl2Name.setTypeface(Typeface.DEFAULT_BOLD);
+            pl2Bg.setBackground(getResources().getDrawable(R.drawable.player_bg_radius));
+            pl1Bg.setBackground(null);
             turn = 2;
         }
     }

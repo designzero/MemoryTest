@@ -33,6 +33,7 @@ public class MenuFragmentDifficulty extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).gotoMenu();
             }
         });
@@ -40,6 +41,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,2);
                 ((MainActivity)getActivity()).gotoGame();
             }
@@ -48,6 +50,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonMedium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,3);
                 ((MainActivity)getActivity()).gotoGame();
             }
@@ -55,6 +58,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonHard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,4);
                 ((MainActivity)getActivity()).gotoGame();
             }

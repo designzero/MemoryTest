@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment menuFragmentDifficulty;
     private Fragment gameFragment;
 
+    public MediaPlayer clickSound;
     public MediaPlayer flipSound;
     public MediaPlayer matchedSound;
     public MediaPlayer winSound;
@@ -33,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
         menuFragmentDifficulty = new MenuFragmentDifficulty();
         gameFragment = new GameFragment();
 
+        clickSound = MediaPlayer.create(this, R.raw.click_std);
+        clickSound.setVolume(0.5f,0.5f);
         flipSound = MediaPlayer.create(this, R.raw.flip2);
-        flipSound.setVolume(0.25f,0.25f);
+        flipSound.setVolume(0.3f,0.3f);
         matchedSound = MediaPlayer.create(this, R.raw.par1);
         winSound = MediaPlayer.create(this, R.raw.winning);
         winSound.setVolume(0.30f,0.30f);

@@ -30,6 +30,7 @@ public class MenuFragment extends Fragment {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).clickSound.start();
                 getActivity().finish();
             }
         });
@@ -38,6 +39,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GameFragment.setDuo(false);
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).gotoDiffMenu();
             }
         });
@@ -46,6 +48,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GameFragment.setDuo(true);
+                ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).gotoDiffMenu();
             }
         });

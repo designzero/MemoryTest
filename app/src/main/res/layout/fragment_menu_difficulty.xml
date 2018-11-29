@@ -23,6 +23,7 @@
             android:background="@drawable/back_arrow"
             android:textAllCaps="false"
             android:textSize="30sp"
+            android:soundEffectsEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +71,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
+                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -88,6 +90,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
+                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_hard"
                 app:layout_constraintStart_toEndOf="@+id/button_easy" />
@@ -107,6 +110,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
+                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_duo"
                 app:layout_constraintHorizontal_bias="0.105"

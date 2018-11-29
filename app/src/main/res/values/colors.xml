@@ -6,5 +6,6 @@
     <color name="title_bar">#d4ad55</color>
     <color name="button_blue">#5a94b4</color>
 
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#31000000</color>
+    <color name="player_bg">#669900</color>
 </resources>

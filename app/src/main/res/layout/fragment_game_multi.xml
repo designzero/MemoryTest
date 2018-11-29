@@ -17,41 +17,6 @@
         android:clipChildren="false"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/image_pair4"
-            android:layout_width="70dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/pl2_score"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/pairsymbol"
-            tools:layout_conversion_absoluteHeight="60dp"
-            tools:layout_conversion_absoluteWidth="60dp" />
-
-        <TextView
-            android:id="@+id/pl1_score"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="350dp"
-            android:layout_marginTop="8dp"
-            android:shadowColor="@android:color/white"
-            android:shadowDx="3"
-            android:text="0/6"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/background_light"
-            android:textSize="48sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_pair4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_conversion_absoluteWidth="710dp" />
-
         <Button
             android:id="@+id/button_back"
             android:layout_width="230dp"
@@ -60,79 +25,122 @@
             android:background="@drawable/back_arrow"
             android:textAllCaps="false"
             android:textSize="30sp"
+            android:soundEffectsEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="75dp"
             tools:layout_conversion_absoluteWidth="139dp" />
 
-        <ImageView
-            android:id="@+id/image_pair"
-            android:layout_width="70dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/pl1_score"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/pairsymbol"
-            tools:layout_conversion_absoluteHeight="60dp"
-            tools:layout_conversion_absoluteWidth="60dp" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pl1_bg"
+            android:layout_width="450dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/player_bg_radius"
+            app:layout_constraintStart_toEndOf="@+id/button_back">
 
-        <TextView
-            android:id="@+id/pl2_score"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="8dp"
-            android:shadowColor="@android:color/white"
-            android:shadowDx="3"
-            android:text="0/6"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/background_light"
-            android:textSize="48sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            <TextView
+                android:id="@+id/pl1_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poetsen"
+                android:text="Nils"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/white"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_pair"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="64dp"
+                tools:layout_conversion_absoluteWidth="81dp" />
+
+            <TextView
+                android:id="@+id/pl1_score"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/poetsen"
+                android:shadowDx="3"
+                android:text="0/6"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/white"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="64dp"
+                tools:layout_conversion_absoluteWidth="74dp" />
+
+            <ImageView
+                android:id="@+id/image_pair"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pl1_score"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/pairsymbol"
+                tools:layout_conversion_absoluteHeight="90dp"
+                tools:layout_conversion_absoluteWidth="70dp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pl2_bg"
+            android:layout_width="450dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_conversion_absoluteWidth="710dp" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/pl1_bg"
+            tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/pl1_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Nils"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/white"
-            android:textSize="48sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_pair"
-            app:layout_constraintStart_toEndOf="@+id/button_back"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/pl2_score"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/poetsen"
+                android:shadowColor="@android:color/white"
+                android:shadowDx="3"
+                android:text="0/6"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/background_light"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/pl2_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="Spelare 2"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/white"
-            android:textSize="48sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_pair4"
-            app:layout_constraintStart_toEndOf="@+id/pl1_score"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/image_pair4"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pl2_score"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/pairsymbol" />
+
+            <TextView
+                android:id="@+id/pl2_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poetsen"
+                android:text="Gäst"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/white"
+                android:textSize="56sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_pair4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
