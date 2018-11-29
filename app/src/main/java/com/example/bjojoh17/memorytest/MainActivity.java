@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public MediaPlayer matchedSound;
     public MediaPlayer startSound;
     public MediaPlayer winSound;
+    public MediaPlayer placeSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         winSound.setVolume(0.30f,0.30f);
         startSound = MediaPlayer.create(this, R.raw.cardfan1);
         startSound.setVolume(0.30f,0.30f);
+        placeSound = MediaPlayer.create(this, R.raw.cardplace3);
+        placeSound.setVolume(0.50f,0.50f);
 
         gotoMenu();
     }

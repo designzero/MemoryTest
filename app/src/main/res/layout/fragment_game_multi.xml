@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/pl1_score"
-                android:layout_width="95dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poetsen"
@@ -67,7 +67,7 @@
                 android:text="0/6"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="56sp"
+                android:textSize="64sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +100,7 @@
 
             <TextView
                 android:id="@+id/pl2_score"
-                android:layout_width="95dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poetsen"
@@ -109,7 +109,7 @@
                 android:text="0/6"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
-                android:textSize="56sp"
+                android:textSize="64sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -122,6 +122,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     public ObjectAnimator animator3;
 
     final Handler animHandler = new Handler();
+    Handler endHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -198,6 +199,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 if(animator3 != null)
                     animator3.cancel();
                 animHandler.removeCallbacksAndMessages(null);
+                endHandler.removeCallbacksAndMessages(null);
                 ((MainActivity)getActivity()).gotoMenu();
             }
         });
@@ -506,7 +508,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void run() {
 
-                            PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX() - 20);
+                            PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", (button2.getWidth() * button2.getScaleX()) / 2 + (metrics.widthPixels / 2) - gridLayout.getX() - 37);
                             //PropertyValuesHolder pvhX3 = PropertyValuesHolder.ofFloat("x", metrics.widthPixels - getViewCoords(button2, "x") - gridLayout.getX());
                             PropertyValuesHolder pvhY3 = PropertyValuesHolder.ofFloat("y", (button2.getHeight() * button2.getScaleY()) / 2 - (metrics.heightPixels / 2) - gridLayout.getY() - (gameFragmentContainer.getY() / 2));
                             PropertyValuesHolder pvhSX3 = PropertyValuesHolder.ofFloat("scaleX", 0.32f / metrics.density);
@@ -538,6 +540,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                                 public void onAnimationEnd(Animator animator3) {
                                     button2.setVisibility(View.INVISIBLE);
                                     addScore();
+                                    //((MainActivity)getActivity()).placeSound.start();
                                     YoYo.with(Techniques.RubberBand)
                                             .duration(500)
                                             .repeat(0)
@@ -585,6 +588,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
 
     protected void addScore() {
+        if (numberMatched != numberOfElements / 2)
+            ((MainActivity)getActivity()).placeSound.start();
+
         if (turn == 0) {
             pl1ScoreText.setText(numberMatched + "/" + numberOfElements/2);
         }
@@ -679,6 +685,16 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             button.flip();
             vibrator.vibrate(vibrateLong);
 
+
+            YoYo.with(Techniques.Pulse)
+                    .duration(700)
+                    .repeat(0)
+                    .playOn(selectedButton1);
+            YoYo.with(Techniques.Pulse)
+                    .duration(700)
+                    .repeat(0)
+                    .playOn(button);
+
             button.setMatched(true);
             selectedButton1.setMatched(true);
 
@@ -717,10 +733,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         System.out.println("XX " + skipped);
                         if (duo) {
                             if (pl1Score > pl2Score) {
-                                showEndScore("Nils är vinnaren!");
+                                showEndScore("Nils fick flest par!");
                             }
                             else if (pl1Score < pl2Score) {
-                                showEndScore("Gästen är vinnaren!");
+                                showEndScore("Gästen fick flest par!");
                             }
                             else {
                                 showEndScore("Det blev lika!");
@@ -734,7 +750,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         }
 
                         else if (skipped == false){
-                            final Handler handler = new Handler();
+                            endHandler = new Handler();
 
                             handler.postDelayed(new Runnable() {
                                 @Override
