@@ -717,10 +717,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         System.out.println("XX " + skipped);
                         if (duo) {
                             if (pl1Score > pl2Score) {
-                                showEndScore("Spelare 1 vann!");
+                                showEndScore("Nils är vinnaren!");
                             }
                             else if (pl1Score < pl2Score) {
-                                showEndScore("Spelare 2 vann!");
+                                showEndScore("Gästen är vinnaren!");
                             }
                             else {
                                 showEndScore("Det blev lika!");
@@ -729,7 +729,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                         }
 
                         else if (skipped){
-                            showEndScore("Bra jobbat!");
+                            showEndScore("Bra jobbat Nils!");
                             skipped = false;
                         }
 
