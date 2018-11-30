@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         winSound = MediaPlayer.create(this, R.raw.winning);
         winSound.setVolume(0.30f,0.30f);
         startSound = MediaPlayer.create(this, R.raw.cardfan1);
-        startSound.setVolume(0.30f,0.30f);
+        startSound.setVolume(1f,1f);
         placeSound = MediaPlayer.create(this, R.raw.cardplace3);
         placeSound.setVolume(0.50f,0.50f);
 
