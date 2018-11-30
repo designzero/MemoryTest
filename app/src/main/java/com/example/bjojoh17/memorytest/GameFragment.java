@@ -322,7 +322,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
         ((MainActivity)getActivity()).startSound.start();
         YoYo.with(Techniques.BounceInUp)
-                .duration(900)
+                .duration(1150)
                 .repeat(0)
                 .playOn(gridLayout);
         final Handler handler = new Handler();

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/poetsen"
-            android:text="Mina barnbarn"
+            android:text="Blandade minnen"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="56sp"
