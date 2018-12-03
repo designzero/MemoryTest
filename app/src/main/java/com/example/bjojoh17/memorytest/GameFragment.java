@@ -7,17 +7,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.icu.text.SymbolTable;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -192,6 +188,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 cancelMatchedAnimation();
                 backButton.setTranslationX(4);

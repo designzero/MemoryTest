@@ -1,10 +1,12 @@
 package com.example.bjojoh17.memorytest;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +28,10 @@ public class EndScoreDialog extends Fragment {
 
     public String endMessage;
 
+    Vibrator vibrator;
+
+    private int vibrateShort = 100;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -46,6 +52,8 @@ public class EndScoreDialog extends Fragment {
         endText = getActivity().findViewById(R.id.text_game_end);
         endText.setText(endMessage);
 
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
         final Handler handler = new Handler();
 
         buttonQuit.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +61,7 @@ public class EndScoreDialog extends Fragment {
             public void onClick(View v) {
                 buttonQuit.setTranslationX(4);
                 buttonQuit.setTranslationY(4);
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -69,6 +78,7 @@ public class EndScoreDialog extends Fragment {
                 GameFragment.setBusy(false);
                 buttonPlayAgain.setTranslationX(4);
                 buttonPlayAgain.setTranslationY(4);
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 handler.postDelayed(new Runnable() {
                     @Override

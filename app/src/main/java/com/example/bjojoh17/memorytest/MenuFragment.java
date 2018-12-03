@@ -1,6 +1,8 @@
 package com.example.bjojoh17.memorytest;
 
+import android.content.Context;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,10 @@ public class MenuFragment extends Fragment {
     private Button buttonBack;
     private Button buttonSolo;
     private Button buttonDuo;
+
+    Vibrator vibrator;
+
+    private int vibrateShort = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -28,11 +34,14 @@ public class MenuFragment extends Fragment {
         buttonSolo = getActivity().findViewById(R.id.button_solo);
         buttonDuo = getActivity().findViewById(R.id.button_duo);
 
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
         final Handler handler = new Handler();
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 getActivity().finish();
             }
@@ -44,6 +53,7 @@ public class MenuFragment extends Fragment {
                 GameFragment.setDuo(false);
                 buttonSolo.setTranslationX(4);
                 buttonSolo.setTranslationY(4);
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -60,6 +70,7 @@ public class MenuFragment extends Fragment {
                 GameFragment.setDuo(true);
                 buttonDuo.setTranslationX(4);
                 buttonDuo.setTranslationY(4);
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
 
                 handler.postDelayed(new Runnable() {

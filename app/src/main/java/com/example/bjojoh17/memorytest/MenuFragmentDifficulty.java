@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,10 @@ public class MenuFragmentDifficulty extends Fragment {
     private Button buttonEasy;
     private Button buttonMedium;
     private Button buttonHard;
+
+    Vibrator vibrator;
+
+    private int vibrateShort = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -32,11 +37,14 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonMedium = getActivity().findViewById(R.id.button_medium);
         buttonHard = getActivity().findViewById(R.id.button_hard);
 
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
         final Handler handler = new Handler();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 backButton.setTranslationX(4);
                 backButton.setTranslationY(4);
@@ -52,6 +60,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,2);
                 buttonEasy.setTranslationX(4);
@@ -68,6 +77,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonMedium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,3);
                 buttonMedium.setTranslationX(4);
@@ -83,6 +93,7 @@ public class MenuFragmentDifficulty extends Fragment {
         buttonHard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).clickSound.start();
                 ((MainActivity)getActivity()).setDifficulty(4,4);
                 buttonHard.setTranslationX(4);
