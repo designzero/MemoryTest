@@ -36,10 +36,10 @@
 
         <Button
             android:id="@+id/button_play_again"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:layout_marginEnd="48dp"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginEnd="64dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/button_play_again"
             android:padding="16dp"
@@ -52,10 +52,10 @@
 
         <Button
             android:id="@+id/button_quit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:layout_marginStart="48dp"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_end_quit"
             android:padding="16dp"
