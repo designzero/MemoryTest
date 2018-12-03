@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:clipChildren="false"
     android:orientation="vertical">
 
@@ -39,9 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@drawable/back_arrow"
+            android:soundEffectsEnabled="false"
             android:textAllCaps="false"
             android:textSize="30sp"
-            android:soundEffectsEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="75dp"
@@ -69,9 +68,9 @@
             android:id="@+id/pl1_score"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poetsen"
             android:shadowColor="@android:color/white"
             android:shadowDx="3"
@@ -95,18 +94,18 @@
         android:soundEffectsEnabled="false">
 
 
-            <GridLayout
-                android:id="@+id/grid_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:clipChildren="false"
-                android:columnCount="4"
-                android:gravity="center"
-                android:rowCount="3"
-                tools:context=".GameFragment">
+        <GridLayout
+            android:id="@+id/grid_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clipChildren="false"
+            android:columnCount="4"
+            android:gravity="center"
+            android:rowCount="3"
+            tools:context=".GameFragment">
 
-            </GridLayout>
+        </GridLayout>
 
     </FrameLayout>
 </LinearLayout>

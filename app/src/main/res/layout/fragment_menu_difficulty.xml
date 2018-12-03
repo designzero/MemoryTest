@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MenuFragmentDifficulty">
@@ -21,9 +20,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/back_arrow"
+            android:soundEffectsEnabled="false"
             android:textAllCaps="false"
             android:textSize="30sp"
-            android:soundEffectsEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,11 +33,11 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:fontFamily="@font/poetsen"
             android:text="@string/title_memory"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="48sp"
-            android:fontFamily="@font/poetsen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +48,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="800dp"
@@ -67,11 +66,11 @@
                 android:fontFamily="@font/poetsen"
                 android:paddingBottom="20dp"
                 android:paddingRight="5dp"
+                android:soundEffectsEnabled="false"
                 android:text="16"
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
-                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -86,11 +85,11 @@
                 android:fontFamily="@font/poetsen"
                 android:paddingBottom="20dp"
                 android:paddingRight="5dp"
+                android:soundEffectsEnabled="false"
                 android:text="12"
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
-                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_hard"
                 app:layout_constraintStart_toEndOf="@+id/button_easy" />
@@ -106,11 +105,11 @@
                 android:fontFamily="@font/poetsen"
                 android:paddingBottom="20dp"
                 android:paddingRight="5dp"
+                android:soundEffectsEnabled="false"
                 android:text="8"
                 android:textAllCaps="false"
                 android:textColor="@color/button_blue"
                 android:textSize="88sp"
-                android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_duo"
                 app:layout_constraintHorizontal_bias="0.105"
