@@ -522,7 +522,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         ft.commit();
         ((EndScoreDialog) endScore).setMessage(endMessage);
         ((MainActivity)getActivity()).winSound.start();
-        numberMatched = 0;
     }
 
     public void onClick(Layout layout) {
