@@ -242,7 +242,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        //shuffleButtonGraphics();
+        shuffleButtonGraphics();
 
         for(int r = 0; r < gameRows; r++){
             for(int c = 0; c < gameColumns; c++){
@@ -528,7 +528,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     public void onClick(Layout layout) {
         if(isZooming){
             cancelMatchedAnimation();
-            return;
         }
     }
 

@@ -60,7 +60,7 @@ public class EndScoreDialog extends Fragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        ((MainActivity)getActivity()).gotoMenu();
+                        getActivity().finish();
                     }
                 }, 200);
             }

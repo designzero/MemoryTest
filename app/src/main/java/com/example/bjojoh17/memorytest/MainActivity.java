@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public Fragment gameFragment;
 
     SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+
     public int soundIds[];
 
     @Override
