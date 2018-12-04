@@ -45,7 +45,7 @@ public class MenuFragmentDifficulty extends Fragment {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 backButton.setTranslationX(4);
                 backButton.setTranslationY(4);
                 handler.postDelayed(new Runnable() {
@@ -61,7 +61,7 @@ public class MenuFragmentDifficulty extends Fragment {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 ((MainActivity)getActivity()).setDifficulty(4,2);
                 buttonEasy.setTranslationX(4);
                 buttonEasy.setTranslationY(4);
@@ -78,7 +78,7 @@ public class MenuFragmentDifficulty extends Fragment {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 ((MainActivity)getActivity()).setDifficulty(4,3);
                 buttonMedium.setTranslationX(4);
                 buttonMedium.setTranslationY(4);
@@ -94,7 +94,7 @@ public class MenuFragmentDifficulty extends Fragment {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 ((MainActivity)getActivity()).setDifficulty(4,4);
                 buttonHard.setTranslationX(4);
                 buttonHard.setTranslationY(4);

@@ -17,13 +17,6 @@ public class MainActivity extends AppCompatActivity {
     public Fragment menuFragmentDifficulty;
     public Fragment gameFragment;
 
-    public MediaPlayer clickSound;
-    public MediaPlayer flipSound;
-    public MediaPlayer matchedSound;
-    public MediaPlayer startSound;
-    public MediaPlayer winSound;
-    public MediaPlayer placeSound;
-
     SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
     public int soundIds[];
 
@@ -36,18 +29,6 @@ public class MainActivity extends AppCompatActivity {
         menuFragment = new MenuFragment();
         menuFragmentDifficulty = new MenuFragmentDifficulty();
         gameFragment = new GameFragment();
-
-        clickSound = MediaPlayer.create(this, R.raw.click_std);
-        clickSound.setVolume(0.5f,0.5f);
-        flipSound = MediaPlayer.create(this, R.raw.flip);
-        flipSound.setVolume(0.3f,0.3f);
-        matchedSound = MediaPlayer.create(this, R.raw.par1);
-        winSound = MediaPlayer.create(this, R.raw.winning);
-        winSound.setVolume(0.30f,0.30f);
-        startSound = MediaPlayer.create(this, R.raw.cardfan1);
-        startSound.setVolume(1f,1f);
-        placeSound = MediaPlayer.create(this, R.raw.cardplace3);
-        placeSound.setVolume(0.50f,0.50f);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 

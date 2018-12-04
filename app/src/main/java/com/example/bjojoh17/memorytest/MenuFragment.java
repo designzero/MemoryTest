@@ -42,7 +42,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 getActivity().finish();
             }
         });
@@ -54,7 +54,7 @@ public class MenuFragment extends Fragment {
                 buttonSolo.setTranslationX(4);
                 buttonSolo.setTranslationY(4);
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -71,7 +71,7 @@ public class MenuFragment extends Fragment {
                 buttonDuo.setTranslationX(4);
                 buttonDuo.setTranslationY(4);
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
 
                 handler.postDelayed(new Runnable() {
                     @Override

@@ -56,7 +56,7 @@ public class EndScoreDialog extends Fragment {
                 buttonQuit.setTranslationX(4);
                 buttonQuit.setTranslationY(4);
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -73,7 +73,7 @@ public class EndScoreDialog extends Fragment {
                 buttonPlayAgain.setTranslationX(4);
                 buttonPlayAgain.setTranslationY(4);
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

@@ -183,6 +183,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberMatched = 0;
                 vibrator.vibrate(vibrateShort);
                 ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 cancelMatchedAnimation();
