@@ -184,7 +184,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 vibrator.vibrate(vibrateShort);
-                ((MainActivity)getActivity()).clickSound.start();
+                ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[0], 1, 1, 1, 0, 1.0f);
                 cancelMatchedAnimation();
                 backButton.setTranslationX(4);
                 backButton.setTranslationY(4);
@@ -241,7 +241,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         buttonGraphicIndexes = new int[numberOfElements];
 
-        shuffleButtonGraphics();
+        //shuffleButtonGraphics();
 
         for(int r = 0; r < gameRows; r++){
             for(int c = 0; c < gameColumns; c++){
@@ -254,7 +254,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 gridLayout.addView(tempButton);
             }
         }
-        ((MainActivity)getActivity()).startSound.start();
+        ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[5], 1, 1, 1, 0, 1);
         YoYo.with(Techniques.BounceInUp)
                 .duration(1150)
                 .repeat(0)
@@ -459,7 +459,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     protected void addScore() {
         if (numberMatched != numberOfElements / 2)
-            ((MainActivity)getActivity()).placeSound.start();
+            ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[3], 0.5f, 0.5f, 1, 0, 1);
 
         if (turn == 0) {
             pl1Score++;
@@ -521,7 +521,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         ft.addToBackStack(null);
         ft.commit();
         ((EndScoreDialog) endScore).setMessage(endMessage);
-        ((MainActivity)getActivity()).winSound.start();
+        ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[4], 0.3f, 0.3f, 1, 0, 1);
     }
 
     public void onClick(Layout layout) {
@@ -553,7 +553,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             return;
 
         if(selectedButton1 == null){
-            ((MainActivity)getActivity()).flipSound.start();
+            ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[1], 0.3f, 0.3f, 1, 0, 1);
             vibrator.vibrate(vibrateShort);
             selectedButton1 = button;
             selectedButton1.flip();
@@ -566,7 +566,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         if(selectedButton1.getFrontDrawableId() == button.getFrontDrawableId()) {
             isBusy = true;
-            ((MainActivity)getActivity()).matchedSound.start();
+            ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[2], 1, 1, 1, 0, 1);
             button.flip();
             vibrator.vibrate(vibrateLong);
 
@@ -645,7 +645,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
 
         else {
-            ((MainActivity)getActivity()).flipSound.start();
+            ((MainActivity)getActivity()).sp.play(((MainActivity)getActivity()).soundIds[1], 0.3f, 0.3f, 1, 0, 1);
             vibrator.vibrate(vibrateShort);
             selectedButton2 = button ;
             selectedButton2.flip();

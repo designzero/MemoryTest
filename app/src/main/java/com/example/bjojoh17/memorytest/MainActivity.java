@@ -1,6 +1,8 @@
 package com.example.bjojoh17.memorytest;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     public MediaPlayer startSound;
     public MediaPlayer winSound;
     public MediaPlayer placeSound;
+
+    SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+    public int soundIds[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
         startSound.setVolume(1f,1f);
         placeSound = MediaPlayer.create(this, R.raw.cardplace3);
         placeSound.setVolume(0.50f,0.50f);
+
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        soundIds = new int[6];
+
+        soundIds[0] = sp.load(this, R.raw.click_std, 1);
+        soundIds[1] = sp.load(this, R.raw.flip, 1);
+        soundIds[2] = sp.load(this, R.raw.par1, 1);
+        soundIds[3] = sp.load(this, R.raw.cardplace3, 1);
+        soundIds[4] = sp.load(this, R.raw.winning, 1);
+        soundIds[5] = sp.load(this, R.raw.cardfan1, 1);
 
         gotoMenu();
     }
