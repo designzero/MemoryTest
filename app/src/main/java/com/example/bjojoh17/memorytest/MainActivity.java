@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void gotoGame() {
         ft = getSupportFragmentManager().beginTransaction();
-        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        //ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
         ft.replace(R.id.fragment_container, gameFragment);
         ft.addToBackStack(null);
         ft.commit();
