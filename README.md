@@ -1,4 +1,4 @@
-# Memory
+# Memory-prototyp
 
 En prototyp på ett Memory-spel, designad för personer med mild demens i uppdrag av MyLife Products AS.
 
